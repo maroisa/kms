@@ -1,8 +1,13 @@
-import { date, pgTable, serial, varchar } from "drizzle-orm/pg-core";
+import { date, integer, pgTable, serial, varchar } from "drizzle-orm/pg-core";
 
 export const mahasiswa = pgTable("mahasiswa", {
 	nim: serial("nim").primaryKey(),
 	nama: varchar({ length: 64 }).notNull(),
 	tempat_lahir: varchar({ length: 16 }).notNull(),
 	tanggal_lahir: date().notNull(),
+});
+
+export const authorized_mahasiswa = pgTable("authorized_mahasiswa", {
+	id: serial().primaryKey(),
+	nim: integer().references(() => mahasiswa.nim),
 });

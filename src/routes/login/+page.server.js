@@ -1,5 +1,5 @@
-import { generateToken, validateUser } from "$lib/auth.js";
-import { error, fail, redirect } from "@sveltejs/kit";
+import { generateToken } from "$lib/auth.js";
+import { fail, redirect } from "@sveltejs/kit";
 
 export const actions = {
     default: async ({ cookies, request }) => {
@@ -16,7 +16,6 @@ export const actions = {
 
         const token = await generateToken(newData);
         if (!token) return fail(401, "Invalid Credentials");
-        console.log(token);
         cookies.set("token", token, { path: "/" });
         redirect(301, "/");
     },
