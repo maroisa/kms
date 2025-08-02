@@ -23,7 +23,7 @@
           </svg>
         </NavItem>
         <NavItem title="Tambahin apa kek" href="/">
-          <img src="/venti.webp" alt="Venti Image" class="size-8 sm:size-10 object-contain">
+          <img src="/venti.webp" alt="Venti's face" class="size-8 sm:size-10 object-contain">
         </NavItem>
       </div>
     </div>
