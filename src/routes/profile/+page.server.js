@@ -1,4 +1,4 @@
-import { getAllMahasiswa } from "$lib/server/query.js";
+import { getMahasiswa } from "$lib/server/query.js";
 import { verifyToken } from "$lib/server/auth";
 import { redirect } from "@sveltejs/kit";
 
@@ -7,8 +7,6 @@ export async function load({ cookies }) {
     const user = verifyToken(token);
     if (!user) return redirect(301, "/login");
 
-    const mahasiswa = await getAllMahasiswa();
-    return {
-        mahasiswa,
-    };
+    const mahasiswa = await getMahasiswa(Number(user.absen));
+    return { mahasiswa };
 }

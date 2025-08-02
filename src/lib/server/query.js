@@ -16,6 +16,13 @@ export async function validateUser(data) {
     return user[0];
 }
 
-export async function getMahasiswa() {
+export async function getAllMahasiswa() {
     return await db.select().from(mahasiswa);
+}
+
+export async function getMahasiswa(nim) {
+    const user = await db.select().from(mahasiswa)
+        .where(eq(mahasiswa.nim, nim))
+        .limit(1);
+    return user[0];
 }
