@@ -96,4 +96,5 @@ INSERT INTO authorized_mahasiswa(nim) VALUES
 (62),
 (15),
 (69),
+(64),
 (24);
