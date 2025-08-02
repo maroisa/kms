@@ -1,4 +1,5 @@
 <script>
+import { formatDate } from "$lib/utils";
 
 let {data} = $props()
 
@@ -27,7 +28,7 @@ let {data} = $props()
             <tr>
                 <td>K35240{mahasiswa.nim.toString().padStart(2, '0')}</td>
                 <td>{mahasiswa.nama}</td>
-                <td>{mahasiswa.tempat_lahir + ', ' + mahasiswa.tanggal_lahir}</td>
+                <td>{mahasiswa.tempat_lahir + ', ' + formatDate(mahasiswa.tanggal_lahir)}</td>
             </tr>
         {/each}
     </tbody>

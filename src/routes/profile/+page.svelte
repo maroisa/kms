@@ -1,12 +1,8 @@
 <script>
 import ProfileItem from "$lib/ProfileItem.svelte";
-let {data} = $props()
+import { formatDate } from "$lib/utils.js";
 
-function formatDate(dateString){
-    const date = new Date(dateString).toLocaleDateString("id-ID", {day: "numeric", month: "long", year: "numeric"})
-    console.log(date)
-    return date
-}
+let {data} = $props()
 
 </script>
 
