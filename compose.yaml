@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    command: node --env-file=/app/.env /app
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      HOST: 0.0.0.0
+    ports:
+      - 3003:3000
+    networks:
+      - backend
+
+networks:
+  backend:
+    external: true
