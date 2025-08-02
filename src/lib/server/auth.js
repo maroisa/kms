@@ -1,23 +1,6 @@
 import jwt from "jsonwebtoken";
 import { env } from "$env/dynamic/private";
-import { and, eq } from "drizzle-orm/expressions";
-
-import { db } from "$lib/server/db/index.js";
-import { authorized_mahasiswa, mahasiswa } from "$lib/server/db/schema.js";
-
-export async function validateUser(data) {
-    const user = await db.select().from(authorized_mahasiswa).leftJoin(
-        mahasiswa,
-        eq(authorized_mahasiswa.nim, mahasiswa.nim),
-    ).where(
-        and(
-            eq(mahasiswa.nim, data.absen),
-            eq(mahasiswa.tanggal_lahir, data.tglLahir),
-        ),
-    ).limit(1);
-
-    return user[0];
-}
+import { validateUser } from "$lib/server/query.js";
 
 export async function generateToken(data) {
     const valid = await validateUser(data);

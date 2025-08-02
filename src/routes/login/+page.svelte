@@ -40,7 +40,7 @@
                 Remember me
             </label>
 
-            <button class="btn btn-neutral mt-4">Login</button>
+            <button class="btn btn-primary mt-4">Login</button>
         </fieldset>
     </form>
 </div>
