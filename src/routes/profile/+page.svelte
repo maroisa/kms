@@ -1,5 +1,4 @@
 <script>
-    import { form } from "$app/server";
 import ProfileItem from "$lib/ProfileItem.svelte";
 let {data} = $props()
 
