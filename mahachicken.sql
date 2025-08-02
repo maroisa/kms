@@ -62,7 +62,7 @@ INSERT INTO mahasiswa(nim,nama,tempat_lahir,tanggal_lahir) VALUES
 (61, 'Muhammad Ridwan Auliansyach', 'Magelang', '2005/09/16'),
 (62, 'Nadhif Athaasyam Nurdewana', 'Sukoharjo', '2006/08/22'),
 (63, 'Natasya Luthfia Ramadhani', 'Karanganyar', '2005/10/12'),
-(64, 'Naufal Hanif Satria Wijayanto', 'Gunungkidul', '2005/08/23'),
+(64, 'Naufal Hanif Satria Wijayanto', 'Gunungkidul', '2005/08/22'),
 (65, 'Rakha Admaja Sukendra', 'Sukoharjo', '2006/08/13'),
 (66, 'Reynardus Werner R. Sanda', 'Jayapura', '2005/12/05'),
 (67, 'Rofi Arrozy As-Salimi', 'Klaten', '2006/04/13'),
