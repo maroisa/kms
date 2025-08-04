@@ -4,6 +4,5 @@ export function formatDate(dateString) {
         month: "long",
         year: "numeric",
     });
-    console.log(date);
     return date;
 }

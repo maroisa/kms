@@ -16,7 +16,10 @@ export const actions = {
 
         const token = await generateToken(newData);
         if (!token) return fail(401, "Invalid Credentials");
-        cookies.set("token", token, { path: "/" });
+
+        const sebulan = new Date();
+        sebulan.setDate(sebulan.getDate() + 30);
+        cookies.set("token", token, { path: "/", expires: sebulan });
         redirect(301, "/");
     },
 };
