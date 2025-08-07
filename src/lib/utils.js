@@ -1,8 +1,10 @@
-export function formatDate(dateString) {
-    const date = new Date(dateString).toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-    });
-    return date;
+export function formatDate(date){
+    const options = {
+        year: "numeric", 
+        day: "numeric", 
+        month: "long"
+    }
+    
+    const newDate = new Date(date).toLocaleDateString("id-ID", options)
+    return newDate
 }

@@ -1,4 +1,3 @@
-FROM node:22-alpine
+FROM nginx:1.29-alpine
 
-WORKDIR /app
-COPY . .
+COPY ./dist /usr/share/nginx/html
