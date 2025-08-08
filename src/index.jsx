@@ -3,7 +3,7 @@ import { render } from "solid-js/web";
 import { Route, Router } from "@solidjs/router";
 import "./index.css";
 
-import AuthProvider from "./components/AuthContext";
+import AuthLayout from "./components/AuthLayout";
 
 import NotFound from "./pages/NotFound";
 import App from "./pages/App";
@@ -27,7 +27,7 @@ render(() => (
         <Route path="/login" component={Login} />
         <Route path="/logout" component={Logout} />
         <Route path="*404" component={NotFound} />
-        <Route component={AuthProvider}>
+        <Route component={AuthLayout}>
             <Route path="/ptik" component={Ptik} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/profile" component={Profile} />

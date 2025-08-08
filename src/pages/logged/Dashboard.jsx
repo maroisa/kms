@@ -28,7 +28,7 @@ export default function Dashboard() {
                             </svg>
 
                         </DashboardItem>
-                        <DashboardItem name="Tambahin apa kek" href="/">
+                        <DashboardItem name="Tambahin apa kek" href="/dashboard">
                             <img src="/assets/venti.jpg" alt="Venti's face" class="size-8 sm:size-10 object-contain" />
                         </DashboardItem>
                     </div>

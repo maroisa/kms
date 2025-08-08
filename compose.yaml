@@ -7,16 +7,8 @@ services:
 
   api:
     build: ./api
-    networks:
-        - backend
     environment:
-        DATABASE_URL: ""
-        PORT: 5000
-    ports:
-      - 5000:5000
+      DATABASE_URL: ""
+      PORT: 5000
     entrypoint: /app/kms-api
     restart: unless-stopped
-
-networks:
-  backend:
-    external: true

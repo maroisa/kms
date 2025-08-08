@@ -21,8 +21,10 @@ func initializeDB() {
 	dbUrl := os.Getenv("DATABASE_URL")
 
 	if dbUrl == "" {
-		dbUrl = "postgres://rin:blank@127.0.0.1:5432/kms"
+		dbUrl = "postgres://rin:blank@127.0.0.1:5432/kms?sslmode=disable"
 		log.Println("DATABASE_URL is not set! defaulted to:", dbUrl)
+	} else {
+		log.Println("DATABASE_URL is:", dbUrl)
 	}
 
 	DB, err := sql.Open("postgres", dbUrl)
@@ -67,9 +69,9 @@ func selectAuthorized(nim string, tanggal_lahir string) string {
 	queryString := "SELECT id, nim FROM authorized_mahasiswa " +
 		"JOIN mahasiswa using (nim) " +
 		"where nim=" + nim + " and tanggal_lahir='" + tanggal_lahir + "'"
-	log.Println(queryString)
 	rows, err := db.Query(queryString)
 	if err != nil {
+		log.Println(err)
 		return ""
 	}
 
@@ -87,6 +89,8 @@ func selectAuthorized(nim string, tanggal_lahir string) string {
 	_, tokenString, err := secret.Encode(map[string]interface{}{
 		"nim": nim,
 	})
+
+	log.Println(tokenString)
 
 	if err != nil {
 		return ""

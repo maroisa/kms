@@ -1,8 +1,8 @@
-import { createSignal, Show } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { isAuthorized } from "../lib/api";
 
-export default function AuthProvider({children, value}){
+export default function AuthLayout({children}){
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = createSignal(true)
 
@@ -11,8 +11,10 @@ export default function AuthProvider({children, value}){
             navigate("/", {replace: true})
             return
         }
+
         setIsLoading(false)
     })
+
     
     return <Show when={!isLoading()}>
         {children}
