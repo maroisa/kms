@@ -1,18 +1,22 @@
 import { A } from "@solidjs/router"
-import { createSignal, Show } from "solid-js"
+import { Show } from "solid-js"
+
+import venti from "/assets/venti.jpg"
 
 import ProfileItem from "../../components/ProfileItem"
 import { getPtik } from "../../lib/api"
 import { formatDate } from "../../lib/utils"
+import { profileDetails, setProfileDetails } from "../../components/AuthLayout"
 
 export default function Profile(){
-    const [mahasiswa, setMahasiswa] = createSignal({})
-
-    getPtik().then(res => {
-        res.json().then(json => {
-            setMahasiswa(json)
+    if (!profileDetails.nim) {
+        getPtik().then(res => {
+            res.json().then(json => {
+                setProfileDetails(json)
+            })
         })
-    })
+    }
+
 
     return <>
         <div class="navbar bg-neutral shadow-lg/25 justify-stretch">
@@ -26,12 +30,12 @@ export default function Profile(){
 
         <div class="p-4 flex flex-col gap-4 max-w-lg m-auto">
             <h1 class="text-center font-bold text-xl">Profilku</h1>
-            <img src="/assets/venti.jpg" alt="Muka venti" class="size-1/2 m-auto" />
+            <img src={venti} alt="Muka venti" class="size-1/2 m-auto" />
             <div class="flex flex-col">
-                <Show when={mahasiswa().nim}>
-                    <ProfileItem name="NIM" value={"K35240" + mahasiswa().nim.toString().padStart(2, '0')} />
-                    <ProfileItem name="Nama" value={mahasiswa().nama} />
-                    <ProfileItem name="Tempat, Tanggal Lahir" value={mahasiswa().tempat_lahir + ", " + formatDate(mahasiswa().tanggal_lahir)} />
+                <Show when={profileDetails.nim}>
+                    <ProfileItem name="NIM" value={"K35240" + profileDetails.nim.toString().padStart(2, '0')} />
+                    <ProfileItem name="Nama" value={profileDetails.nama} />
+                    <ProfileItem name="Tempat, Tanggal Lahir" value={profileDetails.tempat_lahir + ", " + formatDate(profileDetails.tanggal_lahir)} />
                 </Show>
             </div>
             <A href="/logout" class="btn btn-error w-fit mx-auto mt-4">Logout</A>

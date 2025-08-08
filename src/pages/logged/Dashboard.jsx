@@ -1,5 +1,7 @@
 import DashboardItem from "../../components/DashboardItem.jsx"
 
+import venti from "/assets/venti.jpg"
+
 export default function Dashboard() {
     return <>
         <div class="hero max-h-screen min-h-screen bg-[url('/assets/kys.jpg')] overflow-y-auto">
@@ -29,7 +31,7 @@ export default function Dashboard() {
 
                         </DashboardItem>
                         <DashboardItem name="Tambahin apa kek" href="/dashboard">
-                            <img src="/assets/venti.jpg" alt="Venti's face" class="size-8 sm:size-10 object-contain" />
+                            <img src={venti} alt="Venti's face" class="size-8 sm:size-10 object-contain" />
                         </DashboardItem>
                     </div>
                 </div>

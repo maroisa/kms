@@ -1,18 +1,21 @@
 import { A, useNavigate } from "@solidjs/router";
 import { isAuthorized } from "../lib/api";
-import { createSignal, Show } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 
 export default function App(){
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = createSignal(true)
 
-    isAuthorized().then(res => {
-        if (res) {
-            navigate("/dashboard", {replace: true})
-            return
-        }
-        setIsLoading(false)
+    onMount(() => {
+        isAuthorized().then(res => {
+            if (res) {
+                navigate("/dashboard", {replace: true})
+                return
+            }
+            setIsLoading(false)
+        })
     })
+
 
     return <Show when={!isLoading()}>
         <div class="hero h-screen">

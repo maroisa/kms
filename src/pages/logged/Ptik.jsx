@@ -1,18 +1,23 @@
 import { A } from "@solidjs/router";
-import { createSignal, For } from "solid-js";
+import { For } from "solid-js";
 
 import { getAllPtik } from "../../lib/api";
 import { formatDate } from "../../lib/utils";
+import { allPtik, setAllPtik } from "../../components/AuthLayout";
 
-export default function Ptik({data}){
-    const [mahasiswa, setMahasiswa] = createSignal([])
+export default function Ptik(){
+    if (!allPtik.length){
 
-    getAllPtik().then(res => {
-        if (res.status != 200) return
-        res.json().then(json => {
-            setMahasiswa(json)
+        getAllPtik().then(res => {
+            if (res.status != 200) return
+            res.json().then(json => {
+                setAllPtik(json)
+            })
         })
-    })
+    }
+    
+
+
 
     return <>
         <div class="navbar bg-neutral shadow-lg/25">
@@ -34,7 +39,7 @@ export default function Ptik({data}){
                 </tr>
             </thead>
             <tbody>
-                <For each={mahasiswa()}>
+                <For each={allPtik}>
                     {(item, index) => (
                         <tr>
                             <td>K35240{item.nim.toString().padStart(2, '0')}</td>
