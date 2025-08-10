@@ -1,6 +1,7 @@
-const URL = "/api/";
+// const URL = "/api/";
+const URL = "http://localhost:5000/";
 
-export async function isAuthorized() {
+export async function checkAuthorized() {
   const res = await fetch(URL + "auth", {
     method: "GET",
     credentials: "include",
@@ -10,20 +11,19 @@ export async function isAuthorized() {
 }
 
 export async function postLogin(nim, tanggal_lahir) {
-  const formData = new FormData();
-  formData.set("nim", nim);
-  formData.set("tanggal_lahir", tanggal_lahir);
-
   const res = await fetch(URL + "login", {
     method: "POST",
-    body: formData,
+    body: JSON.stringify({
+      nim,
+      tanggal_lahir
+    }),
     credentials: "include",
   });
 
   return res;
 }
 
-export async function logout() {
+export async function postLogout() {
   const res = await fetch(URL + "logout", {
     method: "POST",
     credentials: "include",

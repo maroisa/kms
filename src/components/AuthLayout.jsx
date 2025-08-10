@@ -1,6 +1,6 @@
 import { createSignal, Show } from "solid-js";
 import { useNavigate } from "@solidjs/router";
-import { isAuthorized } from "../lib/api";
+import { checkAuthorized } from "../lib/api";
 import { createStore } from "solid-js/store";
 
 export const [allPtik, setAllPtik] = createStore([])
@@ -10,8 +10,8 @@ export default function AuthLayout({children}){
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = createSignal(true)
 
-    isAuthorized().then(res => {
-        if (!res){
+    checkAuthorized().then(isAuthorized => {
+        if (!isAuthorized){
             navigate("/", {replace: true})
             return
         }

@@ -1,10 +1,10 @@
 import { useNavigate } from "@solidjs/router";
-import { logout } from "../lib/api";
+import { postLogout } from "../lib/api";
 
 export default function Logout(){
     const navigate = useNavigate()
 
-    logout().then(res => {
+    postLogout().then(res => {
         navigate("/", {replace: true})
     })
 

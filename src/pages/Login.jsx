@@ -24,7 +24,7 @@ export default function Login(){
                 }, 2000);
             }
 
-            navigate("/", {replace: true})
+            navigate("/dashboard", {replace: true})
         })
     }
 

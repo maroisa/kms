@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -26,20 +27,24 @@ func postLogout(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func postLogin(w http.ResponseWriter, r *http.Request) {
-	nim := r.FormValue("nim")
-	tanggal_lahir := r.FormValue("tanggal_lahir")
+type LoginData struct {
+	Nim           string `json:"nim"`
+	Tanggal_lahir string `json:"tanggal_lahir"`
+}
 
-	if nim == "" || tanggal_lahir == "" {
-		w.WriteHeader(400)
-		w.Write([]byte("data missing"))
+func postLogin(w http.ResponseWriter, r *http.Request) {
+	var body LoginData
+
+	err := json.NewDecoder(r.Body).Decode(&body)
+	if err != nil {
+		http.Error(w, "data missing", 400)
 		return
 	}
 
-	token := selectAuthorized(nim, tanggal_lahir)
-	if token == "" {
-		w.WriteHeader(400)
-		w.Write([]byte("Not Authorized"))
+	token, err := selectUser(body.Nim, body.Tanggal_lahir)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "not authorized", 400)
 	}
 
 	http.SetCookie(w, &http.Cookie{
@@ -61,8 +66,7 @@ func getAllPtik(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	if err != nil {
-		w.WriteHeader(400)
-		w.Write([]byte("{}"))
+		http.Error(w, "{}", 400)
 		return
 	}
 
@@ -76,29 +80,25 @@ func getPtik(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	if strings.Contains(nim, " ") {
-		w.WriteHeader(400)
-		w.Write([]byte("{}"))
+		http.Error(w, "{}", 400)
 		return
 	}
 
 	num, err := strconv.Atoi(nim)
 
 	if err != nil {
-		w.WriteHeader(400)
-		w.Write([]byte("{}"))
+		http.Error(w, "{}", 400)
 		return
 	}
 
 	if num > 86 || num < 1 {
-		w.WriteHeader(400)
-		w.Write([]byte("{}"))
+		http.Error(w, "{}", 400)
 		return
 	}
 
 	data, err := selectPtik(nim)
 	if err != nil {
-		w.WriteHeader(400)
-		w.Write([]byte("{}"))
+		http.Error(w, "{}", 400)
 		return
 	}
 

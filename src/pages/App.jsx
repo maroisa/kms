@@ -1,5 +1,5 @@
 import { A, useNavigate } from "@solidjs/router";
-import { isAuthorized } from "../lib/api";
+import { checkAuthorized } from "../lib/api";
 import { createSignal, onMount, Show } from "solid-js";
 
 export default function App(){
@@ -7,8 +7,8 @@ export default function App(){
     const [isLoading, setIsLoading] = createSignal(true)
 
     onMount(() => {
-        isAuthorized().then(res => {
-            if (res) {
+        checkAuthorized().then(isAuthorized => {
+            if (isAuthorized) {
                 navigate("/dashboard", {replace: true})
                 return
             }

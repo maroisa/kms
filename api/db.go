@@ -37,7 +37,7 @@ func initializeDB() {
 }
 
 func selectAllPtik() ([]Mahasiswa, error) {
-	rows, err := db.Query("SELECT nim, nama, tempat_lahir, tanggal_lahir FROM mahasiswa")
+	rows, err := db.Query("SELECT nim, nama, tempat_lahir, tanggal_lahir FROM ptik")
 
 	if err != nil {
 		return nil, err
@@ -65,14 +65,13 @@ func selectAllPtik() ([]Mahasiswa, error) {
 	return mahasiswa, nil
 }
 
-func selectAuthorized(nim string, tanggal_lahir string) string {
-	queryString := "SELECT id, nim FROM authorized_mahasiswa " +
-		"JOIN mahasiswa using (nim) " +
+func selectUser(nim string, tanggal_lahir string) (string, error) {
+	queryString := "SELECT id, nim FROM users " +
+		"JOIN ptik using (nim) " +
 		"where nim=" + nim + " and tanggal_lahir='" + tanggal_lahir + "'"
 	rows, err := db.Query(queryString)
 	if err != nil {
-		log.Println(err)
-		return ""
+		return "", err
 	}
 
 	var rowsId string
@@ -82,7 +81,7 @@ func selectAuthorized(nim string, tanggal_lahir string) string {
 	for rows.Next() {
 		err = rows.Scan(&rowsId, &rowsNim)
 		if err != nil {
-			return ""
+			return "", err
 		}
 	}
 
@@ -90,19 +89,17 @@ func selectAuthorized(nim string, tanggal_lahir string) string {
 		"nim": nim,
 	})
 
-	log.Println(tokenString)
-
 	if err != nil {
-		return ""
+		return "", err
 	}
 
-	return tokenString
+	return tokenString, nil
 }
 
 func selectPtik(nim string) (Mahasiswa, error) {
 
 	rows, err := db.Query("SELECT nim, nama, tempat_lahir, tanggal_lahir "+
-		"FROM mahasiswa "+
+		"FROM ptik "+
 		"WHERE nim = $1 LIMIT 1", nim)
 
 	if err != nil {
