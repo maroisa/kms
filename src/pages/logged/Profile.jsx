@@ -18,7 +18,7 @@ export default function Profile(){
     }
 
 
-    return <>
+    return <div class="h-full flex flex-col">
         <div class="navbar bg-neutral shadow-lg/25 justify-stretch">
             <A href="/dashboard" class="btn btn-ghost text-xl h-full">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -28,17 +28,17 @@ export default function Profile(){
             </A>
         </div>
 
-        <div class="p-4 flex flex-col gap-4 max-w-lg m-auto">
-            <h1 class="text-center font-bold text-xl">Profilku</h1>
-            <img src={venti} alt="Muka venti" class="size-1/2 m-auto" />
-            <div class="flex flex-col">
+        <div class="p-4 flex flex-col grow gap-10 max-w-2xl sm:mx-auto sm:min-w-xl">
+            <h1 class="text-center font-bold text-2xl">Profilku</h1>
+            <img src={venti} alt="Muka venti" class="size-40 aspect-square mx-auto rounded-full border-2 border-base-content" />
+            <div class="flex flex-col justify-center grow">
                 <Show when={profileDetails.nim}>
                     <ProfileItem name="NIM" value={"K35240" + profileDetails.nim.toString().padStart(2, '0')} />
                     <ProfileItem name="Nama" value={profileDetails.nama} />
                     <ProfileItem name="Tempat, Tanggal Lahir" value={profileDetails.tempat_lahir + ", " + formatDate(profileDetails.tanggal_lahir)} />
                 </Show>
             </div>
-            <A href="/logout" class="btn btn-error w-fit mx-auto mt-4">Logout</A>
+            <A href="/logout" class="btn text-error btn-ghost w-fit ml-auto mt-4">Logout</A>
         </div>
-    </>
+    </div>
 }

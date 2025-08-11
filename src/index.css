@@ -2,3 +2,7 @@
 @plugin "daisyui" {
     themes: sunset --default;
 }
+
+html, body, #root {
+    @apply h-full
+}
