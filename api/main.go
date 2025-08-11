@@ -42,7 +42,7 @@ func main() {
 	r.Group(func(r chi.Router) {
 		r.Use(jwtauth.Verifier(secret))
 		r.Use(jwtauth.Authenticator(secret))
-		r.Get("/auth", func(w http.ResponseWriter, r *http.Request) {})
+		r.Get("/auth", getAuth)
 		r.Get("/ptik", getAllPtik)
 		r.Get("/ptik/me", getPtik)
 	})

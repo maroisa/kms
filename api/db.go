@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"errors"
 	"log"
 	"os"
 
@@ -69,6 +70,7 @@ func selectUser(nim string, tanggal_lahir string) (string, error) {
 	queryString := "SELECT id, nim FROM users " +
 		"JOIN ptik using (nim) " +
 		"where nim=" + nim + " and tanggal_lahir='" + tanggal_lahir + "'"
+
 	rows, err := db.Query(queryString)
 	if err != nil {
 		return "", err
@@ -83,6 +85,15 @@ func selectUser(nim string, tanggal_lahir string) (string, error) {
 		if err != nil {
 			return "", err
 		}
+	}
+
+	err = rows.Err()
+	if err != nil {
+		return "", err
+	}
+
+	if rowsId == "" || rowsNim == "" {
+		return "", errors.New("user not found")
 	}
 
 	_, tokenString, err := secret.Encode(map[string]interface{}{

@@ -73,6 +73,8 @@ func getAllPtik(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(mahasiswa)
 }
 
+func getAuth(w http.ResponseWriter, r *http.Request) {}
+
 func getPtik(w http.ResponseWriter, r *http.Request) {
 	_, claims, _ := jwtauth.FromContext(r.Context())
 	nim := claims["nim"].(string)
