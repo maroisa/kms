@@ -1,14 +1,16 @@
 services:
   web:
     build: .
-    restart: unless-stopped
     ports:
       - 3000:80
+    restart: unless-stopped
 
   api:
     build: ./api
     environment:
       DATABASE_URL: ""
       PORT: 5000
+    volumes:
+      - ${HOME}/uploads/:/app/uploads/
     entrypoint: /app/kms-api
     restart: unless-stopped
