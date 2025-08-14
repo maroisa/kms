@@ -43,8 +43,10 @@ func main() {
 		r.Use(jwtauth.Verifier(secret))
 		r.Use(jwtauth.Authenticator(secret))
 		r.Get("/auth", getAuth)
-		r.Get("/ptik", getAllPtik)
-		r.Get("/ptik/me", getPtik)
+		r.Get("/ptik", getPtik)
+		r.Get("/user", getUser)
+		r.Put("/user", PutUser)
+		r.Handle("/uploads/*", http.StripPrefix("/uploads/", http.FileServer(http.Dir("./uploads"))))
 	})
 
 	log.Println("Listening on http://127.0.0.1:" + port)

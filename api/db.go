@@ -16,6 +16,14 @@ type Mahasiswa struct {
 	Tempat_lahir  string `json:"tempat_lahir"`
 }
 
+type User struct {
+	Nama          string `json:"nama"`
+	Nim           int    `json:"nim"`
+	Tanggal_lahir string `json:"tanggal_lahir"`
+	Tempat_lahir  string `json:"tempat_lahir"`
+	Pfp           string `json:"pfp"`
+}
+
 var db *sql.DB
 
 func initializeDB() {
@@ -37,7 +45,7 @@ func initializeDB() {
 
 }
 
-func selectAllPtik() ([]Mahasiswa, error) {
+func selectPtik() ([]Mahasiswa, error) {
 	rows, err := db.Query("SELECT nim, nama, tempat_lahir, tanggal_lahir FROM ptik")
 
 	if err != nil {
@@ -66,7 +74,7 @@ func selectAllPtik() ([]Mahasiswa, error) {
 	return mahasiswa, nil
 }
 
-func selectUser(nim string, tanggal_lahir string) (string, error) {
+func validateUser(nim string, tanggal_lahir string) (string, error) {
 	queryString := "SELECT id, nim FROM users " +
 		"JOIN ptik using (nim) " +
 		"where nim=" + nim + " and tanggal_lahir='" + tanggal_lahir + "'"
@@ -107,32 +115,52 @@ func selectUser(nim string, tanggal_lahir string) (string, error) {
 	return tokenString, nil
 }
 
-func selectPtik(nim string) (Mahasiswa, error) {
+func selectUser(nim string) (User, error) {
 
-	rows, err := db.Query("SELECT nim, nama, tempat_lahir, tanggal_lahir "+
-		"FROM ptik "+
-		"WHERE nim = $1 LIMIT 1", nim)
+	rows, err := db.Query("SELECT nim, nama, tempat_lahir, tanggal_lahir, COALESCE(pfp, '') FROM users "+
+		"JOIN ptik using (nim) "+
+		"WHERE nim = $1", nim)
 
 	if err != nil {
-		return Mahasiswa{}, err
+		return User{}, err
 	}
 
 	defer rows.Close()
 
-	var m Mahasiswa
+	var u User
 
 	for rows.Next() {
-		err = rows.Scan(&m.Nim, &m.Nama, &m.Tempat_lahir, &m.Tanggal_lahir)
+		err = rows.Scan(&u.Nim, &u.Nama, &u.Tempat_lahir, &u.Tanggal_lahir, &u.Pfp)
 		if err != nil {
-			return Mahasiswa{}, err
+			return User{}, err
 		}
 	}
 
 	err = rows.Err()
 	if err != nil {
-		return Mahasiswa{}, err
+		return User{}, err
 	}
 
-	return m, nil
+	return u, nil
 
+}
+
+func updateUserPfp(nim string, imageUrl string) error {
+	queryString := "UPDATE users SET pfp='" + imageUrl + "' where nim=" + nim
+	log.Println(queryString)
+	rows, err := db.Query(queryString)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	defer rows.Close()
+
+	err = rows.Err()
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	return nil
 }

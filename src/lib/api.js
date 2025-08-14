@@ -1,4 +1,4 @@
-const URL = "/api/";
+export const URL = "/api/";
 
 export async function checkAuthorized() {
     const res = await fetch(URL + "auth", {
@@ -42,7 +42,7 @@ export async function getAllPtik() {
 }
 
 export async function getPtik() {
-    const res = await fetch(URL + "ptik/me", {
+    const res = await fetch(URL + "user", {
         method: "GET",
         credentials: "include",
     });
@@ -53,7 +53,7 @@ export async function putProfilePict(image){
     const formData = new FormData()
     formData.append("image", image)
 
-    const res = await fetch(URL + "profile", {
+    const res = await fetch(URL + "user", {
         method: "PUT",
         body: formData,
         credentials: "include"

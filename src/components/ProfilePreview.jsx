@@ -1,7 +1,8 @@
 import { putProfilePict } from "../lib/api"
 
-export default function ProfilePreview({profilePict}){
+export default function ProfilePreview({profilePict, refresh}){
     let img = null
+    let modalEl
 
     function getImageURL(){
         img = profilePict()
@@ -10,11 +11,16 @@ export default function ProfilePreview({profilePict}){
     }
 
     function submitProfilePict(){
-        putProfilePict(img)
+        putProfilePict(img).then(res => {
+            if (res.status == 200){
+                modalEl.open = false
+                refresh()
+            }
+        })
     }
 
     return <>
-        <dialog class="modal" open={profilePict()}>
+        <dialog ref={modalEl} class="modal" open={profilePict()}>
             <div class="modal-box">
                 <p class="py-4">Apakah anda yakin untuk mengganti gambar profil?</p>
                 <div class="avatar flex justify-center">
