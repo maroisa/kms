@@ -7,7 +7,8 @@ CREATE TABLE ptik (
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY NOT NULL,
-    nim INTEGER
+    nim INTEGER,
+    pfp VARCHAR(16)
 );
 
 ALTER TABLE "users" ADD CONSTRAINT "users_nim_ptik_nim_fk" FOREIGN KEY ("nim") REFERENCES "public"."ptik"("nim") ON DELETE no action ON UPDATE no action;

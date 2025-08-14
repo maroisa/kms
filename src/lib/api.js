@@ -48,3 +48,16 @@ export async function getPtik() {
     });
     return res;
 }
+
+export async function putProfilePict(image){
+    const formData = new FormData()
+    formData.append("image", image)
+
+    const res = await fetch(URL + "profile", {
+        method: "PUT",
+        body: formData,
+        credentials: "include"
+    })
+
+    return res
+}
