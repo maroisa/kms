@@ -33,7 +33,7 @@ export async function postLogout() {
     return res;
 }
 
-export async function getAllPtik() {
+export async function getPtik() {
     const res = await fetch(URL + "ptik", {
         method: "GET",
         credentials: "include",
@@ -41,7 +41,7 @@ export async function getAllPtik() {
     return res;
 }
 
-export async function getPtik() {
+export async function getUser() {
     const res = await fetch(URL + "user", {
         method: "GET",
         credentials: "include",

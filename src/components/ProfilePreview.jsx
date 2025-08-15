@@ -13,10 +13,10 @@ export default function ProfilePreview({profilePict, refresh}){
     function submitProfilePict(){
         putProfilePict(img).then(res => {
             if (res.status == 200){
-                modalEl.open = false
                 refresh()
             }
         })
+        modalEl.open = false
     }
 
     return <>

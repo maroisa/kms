@@ -2,9 +2,9 @@ import { A } from "@solidjs/router"
 import { createSignal, Show } from "solid-js"
 
 import ProfileItem from "../../components/ProfileItem"
-import { getPtik, URL } from "../../lib/api"
+import { getUser } from "../../lib/api"
 import { formatDate } from "../../lib/utils"
-import { profileDetails, setProfileDetails } from "../../components/AuthLayout"
+import { profileDetails, setProfileDetails } from "./LoggedLayout"
 import SizeAlert from "../../components/SizeAlert"
 import ProfilePreview from "../../components/ProfilePreview"
 
@@ -19,7 +19,7 @@ export default function Profile(){
     }
     
     function refresh(){
-        getPtik().then(res => {
+        getUser().then(res => {
             res.json().then(json => {
                 setProfileDetails(json)
             })
@@ -28,7 +28,7 @@ export default function Profile(){
 
     function getProfilePict(){
         if (profileDetails.pfp){
-            return URL + "uploads/" + profileDetails.pfp
+            return "/uploads/" + profileDetails.pfp
         }
 
         return "/assets/venti.jpg"

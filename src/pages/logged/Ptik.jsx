@@ -1,14 +1,14 @@
 import { A } from "@solidjs/router";
 import { For } from "solid-js";
 
-import { getAllPtik } from "../../lib/api";
+import { getPtik } from "../../lib/api";
 import { formatDate } from "../../lib/utils";
-import { allPtik, setAllPtik } from "../../components/AuthLayout";
+import { allPtik, setAllPtik } from "./LoggedLayout";
 
 export default function Ptik(){
     if (!allPtik.length){
 
-        getAllPtik().then(res => {
+        getPtik().then(res => {
             if (res.status != 200) return
             res.json().then(json => {
                 setAllPtik(json)
