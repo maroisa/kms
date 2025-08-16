@@ -61,3 +61,48 @@ export async function putProfilePict(image){
 
     return res
 }
+
+export async function getSubmission(){
+    const res = await fetch(APIURL + "submission", {
+        method: "GET",
+        credentials: "include"
+    })
+    const json = await res.json()
+
+    if (!json.length) return {}
+
+    const fullRes = json.map(item => {
+        if (!item.pfp) {
+            item.pfp = "/assets/venti.jpg"
+            return item
+        }
+        
+        fetch(APIURL + "/uploads/pfp/" + item.pfp)
+        .then(res => res.blob())
+        .then(blob => {item.pfp = URL.createObjectURL(blob)})
+        return item
+    })
+
+
+    return fullRes
+}
+
+export async function postSubmission(image) {
+    const formData = new FormData()
+    formData.append("image", image)
+
+    const res = await fetch(APIURL + "submission", {
+        method: "POST",
+        body: formData,
+        credentials: "include"
+    })
+    return res
+}
+
+export async function postSubmissionScore(submission_id) {
+    const res = await fetch(APIURL + "submission/score/" + submission_id, {
+        method: "POST",
+        credentials: "include"
+    })
+    return res
+}

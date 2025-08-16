@@ -1,5 +1,6 @@
 dist
 distribute.sh
+api/uploads/
 ./api/kms-api
 .wrangler
 .output

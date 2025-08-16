@@ -9,21 +9,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type Mahasiswa struct {
-	Nama          string `json:"nama"`
-	Nim           int    `json:"nim"`
-	Tanggal_lahir string `json:"tanggal_lahir"`
-	Tempat_lahir  string `json:"tempat_lahir"`
-}
-
-type User struct {
-	Nama          string `json:"nama"`
-	Nim           int    `json:"nim"`
-	Tanggal_lahir string `json:"tanggal_lahir"`
-	Tempat_lahir  string `json:"tempat_lahir"`
-	Pfp           string `json:"pfp"`
-}
-
 var db *sql.DB
 
 func initializeDB() {
@@ -58,7 +43,7 @@ func selectPtik() ([]Mahasiswa, error) {
 	for rows.Next() {
 		var m Mahasiswa
 
-		err = rows.Scan(&m.Nim, &m.Nama, &m.Tempat_lahir, &m.Tanggal_lahir)
+		err = rows.Scan(&m.Nim, &m.Nama, &m.TempatLahir, &m.TanggalLahir)
 		if err != nil {
 			return nil, err
 		}
@@ -75,27 +60,21 @@ func selectPtik() ([]Mahasiswa, error) {
 }
 
 func validateUser(nim string, tanggal_lahir string) (string, error) {
+	var rowsId string
+	var rowsNim string
+
 	queryString := "SELECT id, nim FROM users " +
 		"JOIN ptik using (nim) " +
 		"where nim=" + nim + " and tanggal_lahir='" + tanggal_lahir + "'"
 
-	rows, err := db.Query(queryString)
+	row := db.QueryRow(queryString)
+	err := row.Scan(&rowsId, &rowsNim)
 	if err != nil {
 		return "", err
 	}
 
-	var rowsId string
-	var rowsNim string
+	err = row.Err()
 
-	defer rows.Close()
-	for rows.Next() {
-		err = rows.Scan(&rowsId, &rowsNim)
-		if err != nil {
-			return "", err
-		}
-	}
-
-	err = rows.Err()
 	if err != nil {
 		return "", err
 	}
@@ -116,27 +95,20 @@ func validateUser(nim string, tanggal_lahir string) (string, error) {
 }
 
 func selectUser(nim string) (User, error) {
+	var u User
 
-	rows, err := db.Query("SELECT nim, nama, tempat_lahir, tanggal_lahir, COALESCE(pfp, '') FROM users "+
+	row := db.QueryRow("SELECT nim, nama, tempat_lahir, tanggal_lahir, COALESCE(pfp, '') FROM users "+
 		"JOIN ptik using (nim) "+
 		"WHERE nim = $1", nim)
+
+	err := row.Scan(&u.Nim, &u.Nama, &u.TempatLahir, &u.TanggalLahir, &u.Pfp)
 
 	if err != nil {
 		return User{}, err
 	}
 
-	defer rows.Close()
+	err = row.Err()
 
-	var u User
-
-	for rows.Next() {
-		err = rows.Scan(&u.Nim, &u.Nama, &u.Tempat_lahir, &u.Tanggal_lahir, &u.Pfp)
-		if err != nil {
-			return User{}, err
-		}
-	}
-
-	err = rows.Err()
 	if err != nil {
 		return User{}, err
 	}
@@ -159,6 +131,77 @@ func updateUserPfp(nim string, imageUrl string) error {
 	err = rows.Err()
 	if err != nil {
 		log.Println(err)
+		return err
+	}
+
+	return nil
+}
+
+func selectSubmission(user_nim string) ([]Submission, error) {
+	queryString := "SELECT s.id, img, " +
+		"COALESCE((SELECT COUNT(user_nim) FROM submission_score WHERE submission_id=s.id GROUP BY submission_id), 0) as votes, " +
+		"p.nama, COALESCE(pfp, '') as user_pfp, " +
+		"(SELECT EXISTS(SELECT 1 FROM submission_score WHERE submission_id=s.id AND user_nim=" + user_nim + ")) " +
+		"FROM submission s " +
+		"JOIN users u ON s.user_nim=u.nim " +
+		"JOIN ptik p ON p.nim=u.nim"
+
+	log.Println(queryString)
+	rows, err := db.Query(queryString)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var submissions []Submission
+
+	for rows.Next() {
+		var s Submission
+		err = rows.Scan(&s.Id, &s.Img, &s.Votes, &s.UserNama, &s.UserPfp, &s.Voted)
+		if err != nil {
+			return nil, err
+		}
+		submissions = append(submissions, s)
+	}
+	err = rows.Err()
+	if err != nil {
+		return nil, err
+	}
+
+	return submissions, nil
+}
+
+func insertSubmission(user_nim string, img string) error {
+	var exists bool
+	err := db.QueryRow("SELECT EXISTS(SELECT 1 FROM submission WHERE img = $1)", img).Scan(&exists)
+	if err != nil {
+		return err
+	}
+	if exists {
+		return errors.New("image duplication")
+	}
+
+	queryString := "INSERT INTO submission (user_nim, img) " +
+		"VALUES (" + user_nim + ",'" + img + "') " +
+		"ON CONFLICT (img) DO NOTHING"
+	log.Println(queryString)
+	_, err = db.Exec(queryString)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func insertSubmissionScore(user_nim string, submission_id string) error {
+	queryString := "INSERT INTO submission_score (user_nim, submission_id) " +
+		"VALUES (" + user_nim + "," + submission_id + ")" +
+		"ON CONFLICT (user_nim) DO UPDATE SET submission_id=" + submission_id
+
+	log.Println(queryString)
+	_, err := db.Exec(queryString)
+	if err != nil {
 		return err
 	}
 

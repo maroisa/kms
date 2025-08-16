@@ -14,6 +14,7 @@ export const routes = [
             { path: "/ptik", component: lazy(() => import("./pages/logged/Ptik.jsx")) },
             { path: "/dashboard", component: lazy(() => import("./pages/logged/Dashboard.jsx")) },
             { path: "/profile", component: lazy(() => import("./pages/logged/Profile.jsx")) },
+            { path: "/submission", component: lazy(() => import("./pages/logged/Submission.jsx")) }
         ],
     },
 ];

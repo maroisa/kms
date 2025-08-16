@@ -26,7 +26,7 @@ export default function Profile(){
         async () => {
             if (!user().pfp) return "/assets/venti.jpg"
             
-            const res = await fetch(APIURL + "/uploads/" + user().pfp)
+            const res = await fetch(APIURL + "/uploads/pfp/" + user().pfp)
             const blob = await res.blob()
             return URL.createObjectURL(blob)
         }

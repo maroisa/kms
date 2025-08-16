@@ -7,11 +7,21 @@ CREATE TABLE ptik (
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY NOT NULL,
-    nim INTEGER,
+    nim INTEGER REFERENCES ptik(nim) UNIQUE,
     pfp VARCHAR(16)
 );
 
-ALTER TABLE "users" ADD CONSTRAINT "users_nim_ptik_nim_fk" FOREIGN KEY ("nim") REFERENCES "public"."ptik"("nim") ON DELETE no action ON UPDATE no action;
+CREATE TABLE submission (
+    id SERIAL PRIMARY KEY NOT NULL,
+    user_nim INTEGER REFERENCES users(nim) UNIQUE,
+    img VARCHAR(16) UNIQUE
+);
+
+CREATE TABLE submission_score (
+    id SERIAL PRIMARY KEY NOT NULL,
+    user_nim INTEGER REFERENCES users(nim) UNIQUE,
+    submission_id INTEGER REFERENCES submission(id)
+);
 
 INSERT INTO ptik(nim,nama,tempat_lahir,tanggal_lahir) VALUES
 (01, 'Adelia Rosa Permata', 'Sragen', '2006/04/18'),

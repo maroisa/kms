@@ -46,6 +46,9 @@ func main() {
 		r.Get("/ptik", getPtik)
 		r.Get("/user", getUser)
 		r.Put("/user", PutUser)
+		r.Get("/submission", getSubmission)
+		r.Post("/submission", postSubmission)
+		r.Post("/submission/score/{submission_id}", postSubmissionScore)
 		r.Handle("/uploads/*", http.StripPrefix("/uploads/", http.FileServer(http.Dir("./uploads"))))
 	})
 
