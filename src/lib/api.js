@@ -1,7 +1,7 @@
-export const URL = "/api/";
+export const APIURL = "/api/";
 
 export async function checkAuthorized() {
-    const res = await fetch(URL + "auth", {
+    const res = await fetch(APIURL + "auth", {
         method: "GET",
         credentials: "include",
     });
@@ -12,7 +12,7 @@ export async function checkAuthorized() {
 }
 
 export async function postLogin(nim, tanggal_lahir) {
-    const res = await fetch(URL + "login", {
+    const res = await fetch(APIURL + "login", {
         method: "POST",
         body: JSON.stringify({
             nim,
@@ -25,7 +25,7 @@ export async function postLogin(nim, tanggal_lahir) {
 }
 
 export async function postLogout() {
-    const res = await fetch(URL + "logout", {
+    const res = await fetch(APIURL + "logout", {
         method: "POST",
         credentials: "include",
     });
@@ -34,7 +34,7 @@ export async function postLogout() {
 }
 
 export async function getPtik() {
-    const res = await fetch(URL + "ptik", {
+    const res = await fetch(APIURL + "ptik", {
         method: "GET",
         credentials: "include",
     });
@@ -42,7 +42,7 @@ export async function getPtik() {
 }
 
 export async function getUser() {
-    const res = await fetch(URL + "user", {
+    const res = await fetch(APIURL + "user", {
         method: "GET",
         credentials: "include",
     });
@@ -53,7 +53,7 @@ export async function putProfilePict(image){
     const formData = new FormData()
     formData.append("image", image)
 
-    const res = await fetch(URL + "user", {
+    const res = await fetch(APIURL + "user", {
         method: "PUT",
         body: formData,
         credentials: "include"
