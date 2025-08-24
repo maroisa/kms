@@ -14,6 +14,7 @@ const [user, {refetch: refresh}] = createResource({}, async () => {
     const res = await getUser()
     if (!res.ok) return {}
     const json = await res.json()
+    localStorage.setItem("nim", json.nim)
     return json
 })
 
