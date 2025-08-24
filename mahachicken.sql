@@ -1,23 +1,23 @@
-CREATE TABLE ptik (
+CREATE TABLE IF NOT EXISTS ptik (
     nim SERIAL PRIMARY KEY NOT NULL,
     nama VARCHAR(64) NOT NULL, 
     tempat_lahir VARCHAR(16) NOT NULL,
     tanggal_lahir DATE NOT NULL
 );
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY NOT NULL,
     nim INTEGER REFERENCES ptik(nim) UNIQUE,
     pfp VARCHAR(16)
 );
 
-CREATE TABLE submission (
+CREATE TABLE IF NOT EXISTS submission (
     id SERIAL PRIMARY KEY NOT NULL,
     user_nim INTEGER REFERENCES users(nim) UNIQUE,
     img VARCHAR(16) UNIQUE
 );
 
-CREATE TABLE submission_score (
+CREATE TABLE IF NOT EXISTS submission_score (
     id SERIAL PRIMARY KEY NOT NULL,
     user_nim INTEGER REFERENCES users(nim) UNIQUE,
     submission_id INTEGER REFERENCES submission(id)
@@ -111,15 +111,15 @@ INSERT INTO ptik(nim,nama,tempat_lahir,tanggal_lahir) VALUES
 (85, 'Abiyusafa Noer Rosyadi Agam', 'Sukoharjo', '2005/07/06'),
 (86, 'Jinan Ramadhan Atllah', 'Semarang', '2005/10/31');
 
-INSERT INTO users(nim) VALUES
-(84),
-(70),
-(4),
-(37),
-(44),
-(55),
-(62),
-(15),
-(69),
-(64),
-(24);
+INSERT INTO users(nim, pfp) VALUES
+(84, NULL),
+(70, NULL),
+(4, '422cdf78.png'),
+(37, NULL),
+(44, NULL),
+(55, NULL),
+(62, NULL),
+(15, NULL),
+(69, 'd4c86ac8.jpg'),
+(64, '1bd86843.jpeg'),
+(24, NULL);

@@ -1,11 +1,12 @@
-import { createResource, createSignal, For, Suspense } from "solid-js";
-import BackNavbar from "../../components/BackNavbar";
+import { createResource, createSignal, For, Suspense, lazy } from "solid-js";
 import RatioAlert from "../../components/RatioAlert";
 import SubmissionItem from "../../components/SubmissionItem";
 import SubmissionUpload from "../../components/SubmissionUpload";
 import SizeAlert from "../../components/SizeAlert";
 import { getSubmission } from "../../lib/api";
 import SubmissionSkeleton from "../../components/SubmissionSkeleton";
+
+const BackNavbar = lazy(() => import("../../components/BackNavbar.jsx")) 
 
 const [submissions, {refetch}] = createResource(async () => {
     const res = await getSubmission()

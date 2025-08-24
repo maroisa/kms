@@ -1,14 +1,14 @@
 import { A } from "@solidjs/router"
-import { createResource, createSignal, Show, Suspense } from "solid-js"
-
+import { lazy, createResource, createSignal, Show, Suspense } from "solid-js"
 import ProfileItem from "../../components/ProfileItem"
 import { getUser, APIURL } from "../../lib/api.js"
 import { formatDate } from "../../lib/utils.js"
 
 import SizeAlert from "../../components/SizeAlert.jsx"
 import ProfilePreview from "../../components/ProfilePreview.jsx"
-import BackNavbar from "../../components/BackNavbar.jsx"
 import ProfileItemSkeleton from "../../components/ProfileItemSkeleton"
+
+const BackNavbar = lazy(() => import("../../components/BackNavbar.jsx")) 
 
 const [user, {refetch: refresh}] = createResource({}, async () => {
     const res = await getUser()
