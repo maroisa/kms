@@ -2,6 +2,12 @@ import { lazy } from "solid-js";
 import LoggedLayout from "./pages/logged/LoggedLayout.jsx";
 import App from "./pages/App.jsx";
 
+import Dashboard from "./pages/logged/Dashboard.jsx";
+import Ptik from "./pages/logged/Ptik.jsx";
+import Profile from "./pages/logged/Profile.jsx";
+import Submission from "./pages/logged/Submission.jsx";
+import Jadwal from "./pages/logged/Jadwal.jsx";
+
 export const routes = [
     { path: "/", component: App },
     { path: "/login", component: lazy(() => import("./pages/Login.jsx")) },
@@ -11,11 +17,11 @@ export const routes = [
     {
         component: LoggedLayout,
         children: [
-            { path: "/ptik", component: lazy(() => import("./pages/logged/Ptik.jsx")) },
-            { path: "/dashboard", component: lazy(() => import("./pages/logged/Dashboard.jsx")) },
-            { path: "/profile", component: lazy(() => import("./pages/logged/Profile.jsx")) },
-            { path: "/submission", component: lazy(() => import("./pages/logged/Submission.jsx")) },
-            { path: "/jadwal", component: lazy(() => import("./pages/logged/Jadwal.jsx")) }
+            { path: "/dashboard", component: Dashboard },
+            { path: "/ptik", component: Ptik },
+            { path: "/profile", component: Profile },
+            { path: "/submission", component: Submission },
+            { path: "/jadwal", component: Jadwal }
         ],
     },
 ];

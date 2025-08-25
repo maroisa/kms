@@ -2,7 +2,7 @@ import { createSignal, For, lazy } from "solid-js"
 import {jadwal, sesi} from "../../lib/jadwal.js"
 import { getUser } from "../../lib/api.js"
 
-const BackNavbar = lazy(() => import("../../components/BackNavbar.jsx"))
+import BackNavbar from "../../components/BackNavbar.jsx"
 
 export default function Jadwal(){
     const nim = localStorage.getItem("nim")

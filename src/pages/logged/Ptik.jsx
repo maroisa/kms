@@ -5,7 +5,7 @@ import { getPtik } from "../../lib/api";
 import { formatDate } from "../../lib/utils";
 import PtikTableSkeleton from "../../components/PtikTableSkeleton";
 
-const BackNavbar = lazy(() => import("../../components/BackNavbar.jsx")) 
+import BackNavbar from "../../components/BackNavbar.jsx"
 
 export default function Ptik(){
     const [ptik] = createResource(async () => {

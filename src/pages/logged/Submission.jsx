@@ -6,7 +6,7 @@ import SizeAlert from "../../components/SizeAlert";
 import { getSubmission } from "../../lib/api";
 import SubmissionSkeleton from "../../components/SubmissionSkeleton";
 
-const BackNavbar = lazy(() => import("../../components/BackNavbar.jsx")) 
+import BackNavbar from "../../components/BackNavbar.jsx"
 
 const [submissions, {refetch}] = createResource(async () => {
     const res = await getSubmission()

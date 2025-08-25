@@ -8,7 +8,7 @@ import SizeAlert from "../../components/SizeAlert.jsx"
 import ProfilePreview from "../../components/ProfilePreview.jsx"
 import ProfileItemSkeleton from "../../components/ProfileItemSkeleton"
 
-const BackNavbar = lazy(() => import("../../components/BackNavbar.jsx")) 
+import BackNavbar from "../../components/BackNavbar.jsx"
 
 const [user, {refetch: refresh}] = createResource({}, async () => {
     const res = await getUser()
