@@ -89,8 +89,8 @@ export const jadwal = {
             "Rangkaian Elektronika dan Instrumentasi",
             "Rangkaian Elektronika dan Instrumentasi",
             "Rangkaian Elektronika dan Instrumentasi",
-            "Teori Komputasi",
-            "Teori Komputasi"
+            null,
+            null
         ],
         Rabu: [
             "Keamanan Jaringan Komputer",
@@ -98,8 +98,8 @@ export const jadwal = {
             "Keamanan Jaringan Komputer",
             "Desain Web",
             "Desain Web",
-            null,
-            null,
+            "Teori Komputasi",
+            "Teori Komputasi",
             null,
             null
         ],

@@ -1,5 +1,5 @@
 import { createSignal, For, lazy } from "solid-js"
-import {jadwal, sesi} from "../../lib/jadwal.js"
+import {jadwal, sesi} from "../../data/jadwal.js"
 import { getUser } from "../../lib/api.js"
 
 import BackNavbar from "../../components/BackNavbar.jsx"
