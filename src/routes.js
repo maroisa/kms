@@ -5,7 +5,6 @@ import App from "./pages/App.jsx";
 import Dashboard from "./pages/logged/Dashboard.jsx";
 import Ptik from "./pages/logged/Ptik.jsx";
 import Profile from "./pages/logged/Profile.jsx";
-import Submission from "./pages/logged/Submission.jsx";
 import Jadwal from "./pages/logged/Jadwal.jsx";
 
 export const routes = [
@@ -20,7 +19,7 @@ export const routes = [
             { path: "/dashboard", component: Dashboard },
             { path: "/ptik", component: Ptik },
             { path: "/profile", component: Profile },
-            { path: "/submission", component: Submission },
+            { path: "/submission", component: lazy(() => import("./pages/logged/Submission.jsx")) },
             { path: "/jadwal", component: Jadwal }
         ],
     },

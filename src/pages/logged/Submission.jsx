@@ -33,7 +33,7 @@ export default function Submission(){
         <SizeAlert active={sizeAlertActive} setActive={setSizeAlertActive} />
 
         <button 
-            class="aspect-square fixed bottom-0 right-0 z-2 m-4 p-6 h-auto btn btn-primary rounded-full"
+            class="aspect-square fixed bottom-0 right-0 z-2 m-4 h-auto btn btn-primary rounded-full size-16"
             onclick={() => submissionModal.open = true}
         >
             <span class="font-bold text-xl">+</span>
