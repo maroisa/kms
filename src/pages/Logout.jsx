@@ -5,6 +5,7 @@ export default function Logout(){
     const navigate = useNavigate()
 
     postLogout().then(res => {
+        localStorage.removeItem("nim")
         navigate("/", {replace: true})
     })
 

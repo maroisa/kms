@@ -50,30 +50,31 @@ export default function Profile(){
     return <div class="h-full flex flex-col">
         <BackNavbar title={"Profilku"} />
 
-        <div class="p-4 flex flex-col grow gap-10 max-w-2xl sm:mx-auto sm:min-w-xl">
-            <h1 class="text-center font-bold text-2xl">Profilku</h1>
-            <div class="avatar mx-auto">
-                <div class="w-40 rounded-full">
-                    <Show when={profilePict()} fallback={
-                        <div class="skeleton rounded-full h-full"></div>
-                    }>
-                        <img src={profilePict()} />
-                    </Show >
-                    <input 
-                        ref={inputFile}
-                        onchange={editProfilePict}
-                        type="file"
-                        class="hidden"
-                        accept="image/png, image/jpeg"
-                    />
-                    <button
-                        onclick={() => inputFile.click()}
-                        class="absolute w-full h-full top-0 bg-black/60 opacity-0 hover:opacity-50 active:opacity-100 rounded-full"
-                    >
-                        <svg class="size-8 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                        </svg>
-                    </button>
+        <div class="p-4 flex flex-col grow max-w-2xl sm:mx-auto sm:min-w-xl">
+            <div class="mx-auto grow flex items-center">
+                <div class="avatar">
+                    <div class="w-40 rounded-full">
+                        <Show when={profilePict()} fallback={
+                            <div class="skeleton rounded-full h-full"></div>
+                        }>
+                            <img src={profilePict()} />
+                        </Show >
+                        <input 
+                            ref={inputFile}
+                            onchange={editProfilePict}
+                            type="file"
+                            class="hidden"
+                            accept="image/png, image/jpeg"
+                        />
+                        <button
+                            onclick={() => inputFile.click()}
+                            class="absolute w-full h-full top-0 bg-black/60 opacity-0 hover:opacity-50 active:opacity-100 rounded-full"
+                        >
+                            <svg class="size-8 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="flex flex-col justify-center grow">

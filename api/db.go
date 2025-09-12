@@ -119,7 +119,6 @@ func selectUser(nim string) (User, error) {
 
 func updateUserPfp(nim string, imageUrl string) error {
 	queryString := "UPDATE users SET pfp='" + imageUrl + "' where nim=" + nim
-	log.Println(queryString)
 	rows, err := db.Query(queryString)
 	if err != nil {
 		log.Println(err)
@@ -146,7 +145,6 @@ func selectSubmission(user_nim string) ([]Submission, error) {
 		"JOIN users u ON s.user_nim=u.nim " +
 		"JOIN ptik p ON p.nim=u.nim"
 
-	log.Println(queryString)
 	rows, err := db.Query(queryString)
 	if err != nil {
 		return nil, err
@@ -185,7 +183,6 @@ func insertSubmission(user_nim string, img string) error {
 	queryString := "INSERT INTO submission (user_nim, img) " +
 		"VALUES (" + user_nim + ",'" + img + "') " +
 		"ON CONFLICT (img) DO NOTHING"
-	log.Println(queryString)
 	_, err = db.Exec(queryString)
 	if err != nil {
 		return err
@@ -199,7 +196,6 @@ func insertSubmissionScore(user_nim string, submission_id string) error {
 		"VALUES (" + user_nim + "," + submission_id + ")" +
 		"ON CONFLICT (user_nim) DO UPDATE SET submission_id=" + submission_id
 
-	log.Println(queryString)
 	_, err := db.Exec(queryString)
 	if err != nil {
 		return err

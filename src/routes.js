@@ -13,14 +13,15 @@ export const routes = [
     { path: "/logout", component: lazy(() => import("./pages/Logout.jsx")) },
     { path: "/500", component: lazy(() => import("./pages/500.jsx")) },
     { path: "*404", component: lazy(() => import("./pages/404.jsx")) },
+    { path: "/shuffle", component: lazy(() => import("./pages/Randomizer.jsx")) },
     {
         component: LoggedLayout,
         children: [
             { path: "/dashboard", component: Dashboard },
             { path: "/ptik", component: Ptik },
-            { path: "/profile", component: Profile },
+            { path: "/profile", component: lazy(() => import("./pages/logged/Profile.jsx")) },
             { path: "/submission", component: lazy(() => import("./pages/logged/Submission.jsx")) },
-            { path: "/jadwal", component: Jadwal }
+            { path: "/jadwal", component: Jadwal },
         ],
     },
 ];
