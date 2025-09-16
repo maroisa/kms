@@ -428,7 +428,7 @@ export default [
     {
       nama: "Afifah Zahrah Muthmainnah",
       nim: 72,
-      tanggal_lahir: "2002-11-01T00:00:00Z",
+      tanggal_lahir: "2003-11-01T00:00:00Z",
       tempat_lahir: "Bandung"
     },
     {
@@ -510,7 +510,7 @@ export default [
       tempat_lahir: "Sukoharjo"
     },
     {
-      nama: "Jinan Ramadhan Atllah",
+      nama: "Jinan Ramadhan Atallah",
       nim: 86,
       tanggal_lahir: "2005-10-31T00:00:00Z",
       tempat_lahir: "Semarang"
