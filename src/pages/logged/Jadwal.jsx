@@ -1,19 +1,13 @@
 import { createSignal, For, lazy } from "solid-js"
 import {jadwal, sesi} from "../../data/jadwal.js"
-import { getUser } from "../../lib/api.js"
 
 import BackNavbar from "../../components/BackNavbar.jsx"
 
 export default function Jadwal(){
-    const nim = localStorage.getItem("nim")
+    let nim = localStorage.getItem("nim")
 
     if (!nim) {
-        const res = getUser().then(res => {
-            if (!res.ok) return
-            res.json().then(json => {
-                localStorage.setItem("nim", json.nim)
-            })
-        })
+        nim = 0
     }
 
     const isEven = nim % 2 == 0

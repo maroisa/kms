@@ -31,7 +31,7 @@ export default function SubmissionItem({item, refetch}){
             <img
             class="aspect-square object-cover size-full"
             src={`/api/uploads/submission/${item?.img}`}
-            alt="Shoes" />
+            alt="Gambar Submisi" />
         </figure>
         <div class="px-4 py-2 flex items-center">
             <button class="aspect-square btn btn-ghost p-0 active:scale-120 transition-all" onclick={onVote}>

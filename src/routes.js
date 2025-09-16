@@ -14,6 +14,7 @@ export const routes = [
     { path: "/500", component: lazy(() => import("./pages/500.jsx")) },
     { path: "*404", component: lazy(() => import("./pages/404.jsx")) },
     { path: "/shuffle", component: lazy(() => import("./pages/Randomizer.jsx")) },
+    { path: "/jadwal", component: Jadwal },
     {
         component: LoggedLayout,
         children: [
@@ -21,7 +22,6 @@ export const routes = [
             { path: "/ptik", component: Ptik },
             { path: "/profile", component: lazy(() => import("./pages/logged/Profile.jsx")) },
             { path: "/submission", component: lazy(() => import("./pages/logged/Submission.jsx")) },
-            { path: "/jadwal", component: Jadwal },
         ],
     },
 ];
