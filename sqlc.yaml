@@ -1,0 +1,10 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    queries: "kmsdb/query.sql"
+    schema: "kmsdb/schema.sql"
+    gen:
+      go:
+        package: "kmsdb"
+        out: "kmsdb"
+        sql_package: "pgx/v5"

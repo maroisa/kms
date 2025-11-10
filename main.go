@@ -1,11 +1,14 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 )
 
 func main() {
+	ctx := context.Background()
+	initializeDB(ctx)
 
 	mux := http.NewServeMux()
 	registerRoutes(mux)
