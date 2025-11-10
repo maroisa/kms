@@ -1,0 +1,30 @@
+{{define "title"}} PTIK {{end}}
+
+{{define "content"}}
+
+<div class="overflow-x-auto">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>NIM</th>
+                <th>Nama</th>
+                <th>Tempat, Tanggal Lahir</th>
+            </tr>
+        </thead>
+        <tbody>
+            <Suspense fallback={PtikTableSkeleton}>
+                <For each={ptik}>
+                    {(item, index) => (
+                        <tr>
+                            <td>K35240{item.nim.toString().padStart(2, '0')}</td>
+                            <td>{item.nama}</td>
+                            <td>{item.tempat_lahir + ', ' + formatDate(item.tanggal_lahir)}</td>
+                        </tr>
+                    )}
+                </For>
+            </Suspense>
+        </tbody>
+    </table>
+</div>
+
+{{end}}

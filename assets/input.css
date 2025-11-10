@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+    themes: sunset --default;
+};
+
+@layer base {
+    html, body, main {
+        @apply size-full
+    }
+}
+
+@layer utilities {
+    .center {
+        @apply flex flex-col justify-center items-center
+    }
+}

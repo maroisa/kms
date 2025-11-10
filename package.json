@@ -1,0 +1,14 @@
+{
+  "name": "kms",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "maroisa",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.4",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.17",
+    "daisyui": "^5.4.7",
+    "tailwindcss": "^4.1.17"
+  }
+}

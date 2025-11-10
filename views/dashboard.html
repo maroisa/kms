@@ -1,0 +1,39 @@
+{{define "title"}} KMS - Dashboard {{end}}
+{{define "content"}}
+
+<div class="size-full flex flex-col"> 
+    <div class="navbar bg-neutral shadow-lg/20 flex justify-center">
+        <h1 class="text-2xl font-bold">
+            <span class="animate-bounce inline-block">⚡</span>
+            <span class="bg-clip-text text-transparent bg-linear-to-r bg-amber-500 to-orange-600">KMS</span>
+            <span class="animate-bounce inline-block">⚡</span>
+        </h1>
+    </div>
+
+    <div class="px-4 min-w-full lg:min-w-4xl mx-auto overflow-x-auto">
+        <div class="card card-border bg-base-200 border-neutral my-4">
+            <div class="card-body">
+                <h2 class="card-title">¡¡ Pengumuman !!</h2>
+                <p class="font-medium">
+                    KMS mengadakan sayembara untuk pembuatan logo KMS.
+                    <br />
+                    <br />
+                    untuk penjelasan lebih lanjut dapat hubungi grup KMS.
+                </p>
+            </div>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-2 mt-10 gap-4">
+            {{range $item := .}}
+                <a href="{{$item.Href}}" class="btn btn-outline btn-primary flex flex-col justify-center items-center min-h-28 md:min-h-40">
+                    {{$item.Icon}}
+                    <p class="font-bold mt-2 text-xs sm:text-base">{{$item.Nama}}</p>
+                </a>
+            {{end}}
+        </div>
+    </div>
+</div>
+
+{{end}}

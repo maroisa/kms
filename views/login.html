@@ -1,0 +1,18 @@
+{{define "title"}} Lorem Ipsum {{end}}
+{{define "content"}}
+<main class="center">
+    <form method="POST">
+        <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+            <legend class="fieldset-legend">Login</legend>
+    
+            <label for="nim" class="label">Nomor Absen</label>
+            <input name="nim" type="number" class="input" placeholder="contoh: 10" max="86" min="1" />
+    
+            <label for="tanggal_lahir" class="label">Tanggal Lahir</label>
+            <input name="tanggal_lahir" type="date" class="input" placeholder="Tanggal Lahir" required />
+
+            <button type="submit" class="btn btn-primary mt-4">Login</button>
+        </fieldset>
+    </form>
+</div>
+{{end}}
