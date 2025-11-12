@@ -1,17 +1,13 @@
 {{define "title"}} Profile {{end}}
 
 {{define "content"}}
-<div class="h-full flex flex-col">
-    <!-- <BackNavbar title={"Profilku"} /> -->
+<main class="flex flex-col">
+    {{template "backnav" .}}
     <div class="p-4 flex flex-col grow max-w-2xl sm:mx-auto sm:min-w-xl">
         <div class="mx-auto grow flex items-center">
             <div class="avatar">
                 <div class="w-40 rounded-full">
-                    <!-- <Show when={profilePict()} fallback={
-                        <div class="skeleton rounded-full h-full"></div>
-                    }>
-                        <img src={profilePict()} />
-                    </Show > -->
+                    <img src="/uploads/pfp/{{.Pfp}}" alt="">
                     <input 
                         type="file"
                         class="hidden"
@@ -28,17 +24,24 @@
             </div>
         </div>
         <div class="flex flex-col justify-center grow">
-            <!-- <Suspense fallback={<ProfileItemSkeleton />}>
-                <ProfileItem name="NIM" value={"K35240" + user()?.nim.toString().padStart(2, '0')} />
-                <ProfileItem name="Nama" value={user()?.nama} />
-                <ProfileItem name="Tempat, Tanggal Lahir" value={user()?.tempat_lahir + ", " + formatDate(user()?.tanggal_lahir)} />
-            </Suspense> -->
+            <div class="flex bg-base-200 p-4 border border-neutral first:rounded-t-lg last:rounded-b-lg">
+                <p class="flex-1 text-base-content/80">NIM</p>
+                <p class="font-semibold">{{.Nim}}</p>
+            </div>
+            <div class="flex bg-base-200 p-4 border border-neutral first:rounded-t-lg last:rounded-b-lg">
+                <p class="flex-1 text-base-content/80">Nama</p>
+                <p class="font-semibold">{{.Nama}}</p>
+            </div>
+            <div class="flex bg-base-200 p-4 border border-neutral first:rounded-t-lg last:rounded-b-lg">
+                <p class="flex-1 text-base-content/80">Tempat</p>
+                <p class="font-semibold">{{.TempatLahir}}</p>
+            </div>
+            <div class="flex bg-base-200 p-4 border border-neutral first:rounded-t-lg last:rounded-b-lg">
+                <p class="flex-1 text-base-content/80">Tanggal Lahir:</p>
+                <p class="font-semibold tgl-lahir">{{.TanggalLahir}}</p>
+            </div>
         </div>
         <a href="/logout" class="btn text-error btn-ghost w-fit ml-auto mt-4">Logout</a>
-        <!-- <A href="/logout" class="btn text-error btn-ghost w-fit ml-auto mt-4">Logout</A> -->
     </div>
-    
-    <!-- <SizeAlert active={sizeAlertActive} setActive={setSizeAlertActive} />
-    <ProfilePreview newProfilePict={newProfilePict} refresh={refresh} /> -->
-</div>
+</main>
 {{end}}

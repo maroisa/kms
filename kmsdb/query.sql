@@ -2,10 +2,10 @@
 SELECT CONCAT('K35240', LPAD(nim::text, 2, '0')) as nim, nama, tempat_lahir, TO_CHAR(tanggal_lahir, 'YYYY-MM-DD') as tanggal_lahir FROM ptik;
 
 -- name: CheckUser :one
-SELECT u.id, u.nim FROM users u JOIN ptik p using (nim) where u.nim=$1 and p.tanggal_lahir=$2;
+SELECT u.id, u.nim FROM users u JOIN ptik p using (nim) where u.nim=$1 and p.tanggal_lahir=$2 LIMIT 1;
 
 -- name: GetUser :one
-SELECT p.nim, p.nama, p.tempat_lahir, p.tanggal_lahir, COALESCE(pfp, '') FROM users u JOIN ptik p using (nim) WHERE u.nim = $1;
+SELECT CONCAT('K35240', LPAD(p.nim::text, 2, '0')) as nim, p.nama, p.tempat_lahir, TO_CHAR(p.tanggal_lahir, 'YYYY-MM-DD') as tanggal_lahir, COALESCE(pfp, '') FROM users u JOIN ptik p using (nim) WHERE u.nim = $1 LIMIT 1;
 
 -- name: UpdateProfilePicture :exec
 UPDATE users SET pfp=$1 where nim=$2;
@@ -13,7 +13,7 @@ UPDATE users SET pfp=$1 where nim=$2;
 -- name: GetSubmission :many
 SELECT s.id, img, COALESCE((SELECT COUNT(user_nim) FROM submission_score WHERE submission_id=s.id 
 GROUP BY submission_id), 0) as votes, p.nama, COALESCE(pfp, '') as user_pfp, 
-(SELECT EXISTS(SELECT 1 FROM submission_score WHERE submission_id=s.id AND user_nim=" + user_nim + ")) FROM submission s
+(SELECT EXISTS(SELECT 1 FROM submission_score WHERE submission_id=s.id AND s.user_nim=$1)) FROM submission s
 JOIN users u ON s.user_nim=u.nim
 JOIN ptik p ON p.nim=u.nim;
 

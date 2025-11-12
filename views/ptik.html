@@ -2,8 +2,8 @@
 {{define "content"}}
 
 {{template "backnav" .}}
-<div class="overflow-x-auto">
-    <table class="table">
+<main class="overflow-x-auto">
+    <table class="table p-4">
         
         <thead>
             <tr>
@@ -17,18 +17,10 @@
                 <tr>
                     <td>{{.Nim}}</td>
                     <td>{{.Nama}}</td>
-                    <td>{{.TempatLahir}}, <span class="tglLahir">{{.TanggalLahir}}</span></td>
+                    <td>{{.TempatLahir}}, <span class="tgl-lahir">{{.TanggalLahir}}</span></td>
                 </tr>
             {{end}}
         </tbody>
     </table>
-</div>
-<script>
-    const tglLahir = document.getElementsByClassName("tglLahir")
-    for (let i = 0; i < tglLahir.length; i++) {
-        let date = new Date(tglLahir[i].innerHTML)
-        date = date.toLocaleDateString("id-ID", {dateStyle:"long"})
-        tglLahir[i].innerHTML = date
-    }
-</script>
+</main>
 {{end}}

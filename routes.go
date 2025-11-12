@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 func registerRoutes(mux *http.ServeMux) {
@@ -11,19 +13,19 @@ func registerRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /login", getLogin)
 	mux.HandleFunc("POST /login", postLogin)
 	mux.HandleFunc("GET /dashboard", getDashboard)
-	mux.HandleFunc("GET /profile", func(w http.ResponseWriter, r *http.Request) {
-		Render(w, "profile.html", nil)
-	})
-	mux.HandleFunc("GET /submission", func(w http.ResponseWriter, r *http.Request) {
-		Render(w, "submission.html", nil)
-	})
-	mux.HandleFunc("GET /jadwal", func(w http.ResponseWriter, r *http.Request) {
-		Render(w, "jadwal.html", nil)
-	})
 	mux.HandleFunc("GET /ptik", getPtik)
+	mux.HandleFunc("GET /profile", getProfile)
+	mux.HandleFunc("GET /submission", getSubmission)
+	mux.HandleFunc("GET /jadwal", func(w http.ResponseWriter, r *http.Request) { Render(w, "jadwal.html", nil) })
 
-	fs := http.FileServer(http.Dir("./assets/"))
-	mux.Handle("/assets/", http.StripPrefix("/assets", fs))
+	assetFS := http.FileServer(http.Dir("./assets/"))
+	mux.Handle("/assets/", http.StripPrefix("/assets", assetFS))
+
+	pfpFS := http.FileServer(http.Dir("./uploads/pfp/"))
+	mux.Handle("/uploads/pfp/", http.StripPrefix("/uploads/pfp/", pfpFS))
+
+	submissionFS := http.FileServer(http.Dir("./uploads/submission/"))
+	mux.Handle("/uploads/submission/", http.StripPrefix("/uploads/submission/", submissionFS))
 }
 
 func getIndex(w http.ResponseWriter, r *http.Request) {
@@ -79,4 +81,25 @@ func getPtik(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Render(w, "ptik.html", hasil)
+}
+
+func getProfile(w http.ResponseWriter, r *http.Request) {
+	res, err := queries.GetUser(r.Context(), pgtype.Int4{Int32: 4, Valid: true})
+	if err != nil {
+		log.Println("Error:", err)
+		return
+	}
+
+	Render(w, "profile.html", res)
+}
+
+func getSubmission(w http.ResponseWriter, r *http.Request) {
+	submission, err := queries.GetSubmission(r.Context(), pgtype.Int4{Int32: 4})
+	if err != nil {
+		log.Println("Error:", err)
+	}
+
+	log.Println(submission)
+
+	Render(w, "submission.html", nil)
 }
