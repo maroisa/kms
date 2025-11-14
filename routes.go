@@ -1,9 +1,14 @@
 package main
 
 import (
-	"encoding/json"
+	"io"
+	"kms/kmsdb"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
+	"strconv"
+	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
 )
@@ -12,11 +17,13 @@ func registerRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /{$}", getIndex)
 	mux.HandleFunc("GET /login", getLogin)
 	mux.HandleFunc("POST /login", postLogin)
-	mux.HandleFunc("GET /dashboard", getDashboard)
+	mux.HandleFunc("GET /logout", getLogout)
 	mux.HandleFunc("GET /ptik", getPtik)
-	mux.HandleFunc("GET /profile", getProfile)
-	mux.HandleFunc("GET /submission", getSubmission)
-	mux.HandleFunc("GET /jadwal", func(w http.ResponseWriter, r *http.Request) { Render(w, "jadwal.html", nil) })
+	mux.HandleFunc("GET /jadwal", redirectJadwal)
+	mux.HandleFunc("GET /jadwal/{kelas}", getJadwal)
+	mux.Handle("GET /dashboard", AuthMiddleware(getDashboard))
+	mux.Handle("GET /profile", AuthMiddleware(getProfile))
+	mux.Handle("GET /submission", AuthMiddleware(getSubmission))
 
 	assetFS := http.FileServer(http.Dir("./assets/"))
 	mux.Handle("/assets/", http.StripPrefix("/assets", assetFS))
@@ -37,16 +44,46 @@ func getLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func postLogin(w http.ResponseWriter, r *http.Request) {
-	var data LoginValue
-	data.Nim = r.FormValue("nim")
-	data.TanggalLahir = r.FormValue("tanggal_lahir")
+	var formValue kmsdb.CheckUserParams
 
-	stringify, err := json.Marshal(data)
+	nim, err := strconv.Atoi(r.FormValue("nim"))
 	if err != nil {
-		log.Println("Error:", err)
+		log.Println(err)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(stringify)
+	tanggal_lahir, err := time.Parse("2006-01-02", r.FormValue("tanggal_lahir"))
+	if err != nil {
+		log.Println(err)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+
+	formValue.Nim = pgtype.Int4{Int32: int32(nim), Valid: true}
+	formValue.TanggalLahir = pgtype.Date{Time: tanggal_lahir, Valid: true}
+	res, err := queries.CheckUser(r.Context(), formValue)
+	if err != nil {
+		log.Println(err)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+
+	token, err := createToken(res.Int32)
+	if err != nil {
+		log.Println(err)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "token",
+		Value:    token,
+		Path:     "/",
+		HttpOnly: true,
+		Expires:  time.Now().Add(time.Hour * 72),
+	})
+
+	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
 
 func getDashboard(w http.ResponseWriter, r *http.Request) {
@@ -84,7 +121,8 @@ func getPtik(w http.ResponseWriter, r *http.Request) {
 }
 
 func getProfile(w http.ResponseWriter, r *http.Request) {
-	res, err := queries.GetUser(r.Context(), pgtype.Int4{Int32: 4, Valid: true})
+	nim := r.Context().Value("nim")
+	res, err := queries.GetUser(r.Context(), pgtype.Int4{Int32: int32(nim.(float64)), Valid: true})
 	if err != nil {
 		log.Println("Error:", err)
 		return
@@ -102,4 +140,65 @@ func getSubmission(w http.ResponseWriter, r *http.Request) {
 	log.Println(submission)
 
 	Render(w, "submission.html", nil)
+}
+
+func putUser(w http.ResponseWriter, r *http.Request) {
+	file, fileHeader, err := r.FormFile("image")
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "something wrong", http.StatusBadRequest)
+		return
+	}
+
+	defer file.Close()
+
+	uploadDir := "./uploads/pfp"
+	hashedName := createHashName(file, fileHeader)
+
+	file.Seek(0, 0)
+
+	os.MkdirAll(uploadDir, os.ModePerm)
+	dst, err := os.Create(filepath.Join(uploadDir, hashedName))
+
+	if err != nil {
+		http.Error(w, "Unable to create the file for writing", 500)
+		return
+	}
+
+	defer dst.Close()
+
+	_, err = io.Copy(dst, file)
+	if err != nil {
+		http.Error(w, "Unable to save file", 500)
+	}
+
+	// _, claims, _ := jwtauth.FromContext(r.Context())
+	// nim := claims["nim"].(string)
+
+	// err = updateUserPfp(nim, hashedName)
+	// if err != nil {
+	// 	log.Println(err)
+	// 	http.Error(w, "Unable to update profile", 500)
+	// }
+
+	w.Write([]byte("OK"))
+}
+
+func redirectJadwal(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/jadwal/a", http.StatusPermanentRedirect)
+}
+
+func getJadwal(w http.ResponseWriter, r *http.Request) {
+	Render(w, "jadwal.html", nil)
+}
+
+func getLogout(w http.ResponseWriter, r *http.Request) {
+	http.SetCookie(w, &http.Cookie{
+		Name:     "token",
+		Value:    "",
+		Path:     "/",
+		Expires:  time.Now(),
+		HttpOnly: true,
+	})
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

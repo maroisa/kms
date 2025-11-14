@@ -2,7 +2,7 @@
 SELECT CONCAT('K35240', LPAD(nim::text, 2, '0')) as nim, nama, tempat_lahir, TO_CHAR(tanggal_lahir, 'YYYY-MM-DD') as tanggal_lahir FROM ptik;
 
 -- name: CheckUser :one
-SELECT u.id, u.nim FROM users u JOIN ptik p using (nim) where u.nim=$1 and p.tanggal_lahir=$2 LIMIT 1;
+SELECT u.nim FROM users u JOIN ptik p using (nim) where u.nim=$1 and p.tanggal_lahir=$2 LIMIT 1;
 
 -- name: GetUser :one
 SELECT CONCAT('K35240', LPAD(p.nim::text, 2, '0')) as nim, p.nama, p.tempat_lahir, TO_CHAR(p.tanggal_lahir, 'YYYY-MM-DD') as tanggal_lahir, COALESCE(pfp, '') FROM users u JOIN ptik p using (nim) WHERE u.nim = $1 LIMIT 1;

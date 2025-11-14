@@ -1,43 +1,60 @@
 {{define "title"}} Jadwal {{end}}
 {{define "content"}}
-<div class="flex flex-col">
+<main class="flex flex-col">
+    {{template "backnav" .}}
     <div class="flex gap-4 p-4">
-        <!-- <select class="select flex-1 bg-base-200" onchange={(e) => {
-            const pilihan = e.target.value
-            setCurrentJadwal(jadwal[pilihan])
-        }}> -->
-            <option value="A">Kelas: A</option>
-            <option value="B" selected={isEven}>Kelas: B</option>
-        </select>
+        <a href="/jadwal/a" class="btn grow h-12 link-kelas">Kelas A</a>
+        <a href="/jadwal/b" class="btn grow h-12 link-kelas">Kelas B</a>
     </div>
-
     <div class="p-2 overflow-auto">
         <table class="table w-full min-w-max border border-neutral">
             <thead>
-                <tr class="bg-neutral">
+                <tr class="bg-neutral" id="jadwal-thead">
                     <th>Sesi</th>
                     <th>Jam</th>
-                    <!-- <For each={Object.keys(currentJadwal())}>
-                        {item => <th>{item}</th>}
-                    </For> -->
                 </tr>
             </thead>
-            <tbody>
-                <!-- <For each={Object.keys(sesi)}>
-                    {s => <>
-                        <tr>
-                            <td class="min-w-max max-w-0 w-max">{Number(s) + 1}</td>
-                            <td>{sesi[s]}</td>
-                            <For each={Object.keys(currentJadwal())}>
-                                {hari => <>
-                                    <td>{currentJadwal()[hari][s]}</td>
-                                </>}
-                            </For>
-                        </tr>
-                    </>}
-                </For> -->
+            <tbody id="jadwal-tbody">
             </tbody>
         </table>
     </div>
-</div>
+</main>
+<script src="/assets/jadwal.js"></script>
+<script>
+    const jadwalThead = document.getElementById("jadwal-thead")
+    const jadwalTbody = document.getElementById("jadwal-tbody")
+    const linkKelas = document.getElementsByClassName("link-kelas")
+    const kelas = window.location.pathname.replace("/jadwal/", "")
+
+    for (let i = 0; i < linkKelas.length; i++) {
+        if(linkKelas[i].getAttribute("href") == window.location.pathname) {
+            linkKelas[i].className += " btn-primary"
+        }
+    }
+
+    Object.keys(jadwal[kelas]).forEach(el => {
+        const th = document.createElement("th")
+        th.innerHTML = el
+        jadwalThead.appendChild(th)
+    })
+
+    for (let i = 0; i < sesi.length; i++) {
+        const jadwalTbodyTr = document.createElement("tr")
+
+        const sesiTd = document.createElement("td")
+        const jamTd = document.createElement("td")
+        sesiTd.innerHTML = i + 1
+        jamTd.innerHTML = sesi[i]
+        jadwalTbodyTr.appendChild(sesiTd)
+        jadwalTbodyTr.appendChild(jamTd)
+
+        Object.values(jadwal[kelas]).forEach(el => {
+            const matkulTd = document.createElement("td")
+            matkulTd.innerHTML = el[i]
+            jadwalTbodyTr.appendChild(matkulTd)
+
+        })
+        jadwalTbody.appendChild(jadwalTbodyTr)
+    }
+</script>
 {{end}}

@@ -51,7 +51,7 @@ func (q *Queries) CheckSubmission(ctx context.Context, img pgtype.Text) error {
 }
 
 const checkUser = `-- name: CheckUser :one
-SELECT u.id, u.nim FROM users u JOIN ptik p using (nim) where u.nim=$1 and p.tanggal_lahir=$2 LIMIT 1
+SELECT u.nim FROM users u JOIN ptik p using (nim) where u.nim=$1 and p.tanggal_lahir=$2 LIMIT 1
 `
 
 type CheckUserParams struct {
@@ -59,16 +59,11 @@ type CheckUserParams struct {
 	TanggalLahir pgtype.Date
 }
 
-type CheckUserRow struct {
-	ID  int32
-	Nim pgtype.Int4
-}
-
-func (q *Queries) CheckUser(ctx context.Context, arg CheckUserParams) (CheckUserRow, error) {
+func (q *Queries) CheckUser(ctx context.Context, arg CheckUserParams) (pgtype.Int4, error) {
 	row := q.db.QueryRow(ctx, checkUser, arg.Nim, arg.TanggalLahir)
-	var i CheckUserRow
-	err := row.Scan(&i.ID, &i.Nim)
-	return i, err
+	var nim pgtype.Int4
+	err := row.Scan(&nim)
+	return nim, err
 }
 
 const getSubmission = `-- name: GetSubmission :many

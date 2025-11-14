@@ -1,19 +1,9 @@
 {{define "title"}} Submission {{end}}
 
 {{define "content"}}
-<div class="h-full">
-    <!-- <BackNavbar title="Submission" />
-
-    <SubmissionUpload
-        ref={submissionModal}
-        alertSize={() => setSizeAlertActive(true)}
-        alertRatio={() => setRatioAlertActive(true)}
-        refetch={refetch}
-    />
-
-    <RatioAlert active={ratioAlertActive} setActive={setRatioAlertActive} />
-    <SizeAlert active={sizeAlertActive} setActive={setSizeAlertActive} /> -->
-
+<main>
+    {{template "backnav" .}}
+    
     <button 
         class="aspect-square fixed bottom-0 right-0 z-2 m-4 h-auto btn btn-primary rounded-full size-16"
     >
@@ -29,6 +19,6 @@
             </Suspense> -->
         </div>
     </div>
-</div>
+</main>
 
 {{end}}

@@ -7,7 +7,11 @@
         <div class="mx-auto grow flex items-center">
             <div class="avatar">
                 <div class="w-40 rounded-full">
-                    <img src="/uploads/pfp/{{.Pfp}}" alt="">
+                    {{if .Pfp}}
+                        <img src="/uploads/pfp/{{.Pfp}}" alt="">
+                    {{else}}
+                        <div class="skeleton rounded-full h-full"></div>
+                    {{end}}
                     <input 
                         type="file"
                         class="hidden"
