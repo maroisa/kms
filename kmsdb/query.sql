@@ -10,8 +10,8 @@ SELECT CONCAT('K35240', LPAD(p.nim::text, 2, '0')) as nim, p.nama, p.tempat_lahi
 -- name: UpdateProfilePicture :exec
 UPDATE users SET pfp=$1 where nim=$2;
 
--- name: GetSubmission :many
-SELECT s.id, img, COALESCE((SELECT COUNT(user_nim) FROM submission_score WHERE submission_id=s.id 
+-- name: ListSubmission :many
+SELECT s.id, img::text, COALESCE((SELECT COUNT(user_nim) FROM submission_score WHERE submission_id=s.id 
 GROUP BY submission_id), 0) as votes, p.nama, COALESCE(pfp, '') as user_pfp, 
 (SELECT EXISTS(SELECT 1 FROM submission_score WHERE submission_id=s.id AND s.user_nim=$1)) FROM submission s
 JOIN users u ON s.user_nim=u.nim

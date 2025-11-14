@@ -132,14 +132,17 @@ func getProfile(w http.ResponseWriter, r *http.Request) {
 }
 
 func getSubmission(w http.ResponseWriter, r *http.Request) {
-	submission, err := queries.GetSubmission(r.Context(), pgtype.Int4{Int32: 4})
+	nim := r.Context().Value("nim").(float64)
+	submission, err := queries.ListSubmission(
+		r.Context(),
+		pgtype.Int4{Int32: int32(nim), Valid: true},
+	)
+
 	if err != nil {
 		log.Println("Error:", err)
 	}
 
-	log.Println(submission)
-
-	Render(w, "submission.html", nil)
+	Render(w, "submission.html", submission)
 }
 
 func putUser(w http.ResponseWriter, r *http.Request) {

@@ -3,6 +3,7 @@
 node_modules/
 tmp/
 uploads/
+kms
 
 # IDEs and editors
 /.idea

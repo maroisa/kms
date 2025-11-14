@@ -12,11 +12,30 @@
     
     <div class="max-w-4xl mx-auto">
         <div class="grid grid-cols-1 sm:grid-cols-2 items-center p-4 gap-4">
-            <!-- <Suspense fallback={<SubmissionSkeleton />}>
-                <For each={submissions()}>
-                    {item => <SubmissionItem item={item} refetch={refetch} />}
-                </For>
-            </Suspense> -->
+            {{range .}}
+                <div class="card bg-base-100 max-w-lg shadow-lg/20 border border-white/10">
+                    <div class="flex gap-2 px-4 py-2">
+                        <div class="avatar">
+                            <div style="width: calc(var(--spacing) * 8);" class="w-8 max-rounded-full">
+                                <img src="/uploads/pfp/{{.UserPfp}}" />
+                            </div>
+                        </div>
+                        <h2 class="card-title text-sm">{{.Nama}}</h2>
+                    </div>
+                    <figure>
+                        <img
+                        class="aspect-square object-cover size-full"
+                        src="/uploads/submission/{{.Img}}"
+                        alt="Gambar Submisi" />
+                    </figure>
+                    <div class="px-4 py-2 flex items-center">
+                        <button class="aspect-square btn btn-ghost p-0 active:scale-120 transition-all" onclick={onVote}>
+                            
+                        </button>
+                        <span>{{.Votes}} Votes</span>
+                    </div>
+                </div>
+            {{end}}
         </div>
     </div>
 </main>

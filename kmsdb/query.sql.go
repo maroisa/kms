@@ -66,50 +66,6 @@ func (q *Queries) CheckUser(ctx context.Context, arg CheckUserParams) (pgtype.In
 	return nim, err
 }
 
-const getSubmission = `-- name: GetSubmission :many
-SELECT s.id, img, COALESCE((SELECT COUNT(user_nim) FROM submission_score WHERE submission_id=s.id 
-GROUP BY submission_id), 0) as votes, p.nama, COALESCE(pfp, '') as user_pfp, 
-(SELECT EXISTS(SELECT 1 FROM submission_score WHERE submission_id=s.id AND s.user_nim=$1)) FROM submission s
-JOIN users u ON s.user_nim=u.nim
-JOIN ptik p ON p.nim=u.nim
-`
-
-type GetSubmissionRow struct {
-	ID      int32
-	Img     pgtype.Text
-	Votes   interface{}
-	Nama    string
-	UserPfp string
-	Exists  bool
-}
-
-func (q *Queries) GetSubmission(ctx context.Context, userNim pgtype.Int4) ([]GetSubmissionRow, error) {
-	rows, err := q.db.Query(ctx, getSubmission, userNim)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []GetSubmissionRow
-	for rows.Next() {
-		var i GetSubmissionRow
-		if err := rows.Scan(
-			&i.ID,
-			&i.Img,
-			&i.Votes,
-			&i.Nama,
-			&i.UserPfp,
-			&i.Exists,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
 const getUser = `-- name: GetUser :one
 SELECT CONCAT('K35240', LPAD(p.nim::text, 2, '0')) as nim, p.nama, p.tempat_lahir, TO_CHAR(p.tanggal_lahir, 'YYYY-MM-DD') as tanggal_lahir, COALESCE(pfp, '') FROM users u JOIN ptik p using (nim) WHERE u.nim = $1 LIMIT 1
 `
@@ -160,6 +116,50 @@ func (q *Queries) ListMahasiswa(ctx context.Context) ([]ListMahasiswaRow, error)
 			&i.Nama,
 			&i.TempatLahir,
 			&i.TanggalLahir,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listSubmission = `-- name: ListSubmission :many
+SELECT s.id, img::text, COALESCE((SELECT COUNT(user_nim) FROM submission_score WHERE submission_id=s.id 
+GROUP BY submission_id), 0) as votes, p.nama, COALESCE(pfp, '') as user_pfp, 
+(SELECT EXISTS(SELECT 1 FROM submission_score WHERE submission_id=s.id AND s.user_nim=$1)) FROM submission s
+JOIN users u ON s.user_nim=u.nim
+JOIN ptik p ON p.nim=u.nim
+`
+
+type ListSubmissionRow struct {
+	ID      int32
+	Img     string
+	Votes   interface{}
+	Nama    string
+	UserPfp string
+	Exists  bool
+}
+
+func (q *Queries) ListSubmission(ctx context.Context, userNim pgtype.Int4) ([]ListSubmissionRow, error) {
+	rows, err := q.db.Query(ctx, listSubmission, userNim)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListSubmissionRow
+	for rows.Next() {
+		var i ListSubmissionRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Img,
+			&i.Votes,
+			&i.Nama,
+			&i.UserPfp,
+			&i.Exists,
 		); err != nil {
 			return nil, err
 		}
