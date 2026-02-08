@@ -2,5 +2,5 @@ package web
 
 import "embed"
 
-go:embed build/*
+//go:embed build/*
 var WebFS embed.FS

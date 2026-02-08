@@ -1,13 +1,13 @@
 <script>
     import SkeletonWebp from "$lib/assets/skeleton.webp";
-    import DashboardItem from "$lib/DashboardItem.svelte";
+    import dashboardItem from "$lib/dashboardItem";
     import Bars3Icon from "$lib/icons/bars-3.svelte";
 </script>
 
 <main>
     <div class="flex flex-col h-1/2">
         <div
-            class="navbar bg-base-100/90 z-2 border-b-2 border-b-orange-800 border-linear"
+            class="navbar bg-base-100/90 z-2 border-b-2 border-b-primary border-linear"
         >
             <div class="navbar-start">
                 <div class="dropdown">
@@ -45,7 +45,7 @@
                         >
                         <span class="animate-bounce inline-block">⚡</span>
                     </h1>
-                    <p class="font-bold py-8">
+                    <p class="font-bold py-6">
                         Your favorite computer lab's guardian
                     </p>
                     <a class="btn btn-default btn-outline" href="#fitur"
@@ -55,24 +55,30 @@
             </div>
         </div>
     </div>
-    <div class="bg-base-100 border-t-2 border-t-orange-800 p-2">
+    <div class="bg-base-100 border-t-2 border-t-primary p-2">
         <div class="max-w-6xl mx-auto">
-            <h2 id="fitur" class="text-2xl font-bold p-2 py-4 text-center">
+            <h2 id="fitur" class="text-2xl font-bold py-6 mt-8 text-center">
                 Fitur
             </h2>
             <div class="flex flex-wrap">
-                {#each Array(6) as i}
-                    <div
-                        class="basis-1/2 md:basis-1/3 p-2 md:p-4 aspect-4/3 h-full w-full"
-                    >
-                        <div
-                            class="border-2 border-orange-600 shadow-lg/50 p-4 rounded-lg h-full w-full aspect-video bg-base-200"
+                {#each dashboardItem as item}
+                    <div class="basis-1/2 md:basis-1/3 p-2 sm:p-4">
+                        <a
+                            href={item.href}
+                            class="border-2 border-primary shadow-lg/50 p-4 rounded-lg h-full w-full aspect-4/3 bg-base-200 text-primary text-center flex flex-col justify-center items-center gap-2"
                         >
-                            <button class="btn btn-primary">Lorem</button>
-                        </div>
+                            {@html item.icon}
+                            <p class="text-sm font-bold">
+                                {item.nama}
+                            </p>
+                        </a>
                     </div>
                 {/each}
             </div>
+            <h2 id="Artikel" class="text-2xl font-bold py-6 mt-8 text-center">
+                Artikel
+            </h2>
+            <div class="flex flex-wrap"></div>
         </div>
     </div>
 </main>

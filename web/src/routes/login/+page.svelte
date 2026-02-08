@@ -29,7 +29,7 @@
                 required
             />
 
-            <a href="/password_reset" class="mt-2 label">
+            <a href="/" class="mt-2 label">
                 Lupa password? <u>Reset</u>
             </a>
 
