@@ -22,12 +22,33 @@
                         tabindex="-1"
                         class="menu menu-md dropdown-content bg-base-100 z-1 p-2 w-52"
                     >
-                        <li>A</li>
-                        <li>A</li>
-                        <li>A</li>
+                        <li>
+                            <a href="/ptik">Mahasiswa PTIK</a>
+                        </li>
+                        <li>
+                            <a href="/profile">Profil</a>
+                        </li>
+                        <li>
+                            <a href="/jadwal">Jadwal</a>
+                        </li>
                     </ul>
                 </div>
+                <a class="btn btn-ghost text-xl">KMS</a>
             </div>
+            <div class="navbar-center hidden lg:flex">
+                <ul class="menu menu-horizontal font-semibold">
+                    <li>
+                        <a href="/ptik">Mahasiswa PTIK</a>
+                    </li>
+                    <li>
+                        <a href="/profile">Profil</a>
+                    </li>
+                    <li>
+                        <a href="/jadwal">Jadwal</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-end"></div>
         </div>
         <div class="hero grow bg-black/90">
             <img
