@@ -1,6 +1,13 @@
 <script>
-    let { data } = $props();
-    console.log(data.ptik);
+    import { onMount } from "svelte";
+
+    let ptik = $state([]);
+
+    onMount(async () => {
+        const result = await fetch("http://localhost:3000/api/ptik");
+        const json = await result.json();
+        ptik = json;
+    });
 </script>
 
 <div class="bg-base-200">
@@ -14,14 +21,13 @@
                 </tr>
             </thead>
             <tbody>
-                {#each data.ptik as ptik}
+                {#each ptik as p}
                     <tr>
-                        <td>{ptik.Nim}</td>
-                        <td>{ptik.Nama}</td>
+                        <td>{p.Nim}</td>
+                        <td>{p.Nama}</td>
                         <td
-                            >{ptik.TempatLahir},
-                            <span class="tgl-lahir">{ptik.TanggalLahir}</span
-                            ></td
+                            >{p.TempatLahir},
+                            <span class="tgl-lahir">{p.TanggalLahir}</span></td
                         >
                     </tr>
                 {/each}
