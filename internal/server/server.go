@@ -1,7 +1,7 @@
 package server
 
 import (
-	"go-maro/internal/db"
+	"kms/internal/db"
 	"net/http"
 )
 

@@ -22,3 +22,11 @@ func GetPort() string {
 	}
 	return port
 }
+
+func GetSecret() string {
+	secret := os.Getenv("SECRET")
+	if secret == "" {
+		log.Fatal("SECRET is not set!")
+	}
+	return secret
+}

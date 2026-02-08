@@ -4,10 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"io/fs"
+	"kms/web"
 	"log"
 	"net/http"
-
-	"go-maro/web"
 )
 
 func (s *Server) RegisterRoutes() {

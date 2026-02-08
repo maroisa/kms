@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
-	"go-maro/internal/db"
-	"go-maro/internal/middleware"
-	"go-maro/internal/server"
+	"kms/internal/db"
+	"kms/internal/middleware"
+	"kms/internal/server"
 	"log"
 	"net/http"
 
@@ -18,6 +18,7 @@ func main() {
 	}
 
 	port := server.GetPort()
+	_ = server.GetSecret()
 
 	queries := db.New(pool)
 	srv := server.NewServer(queries)
