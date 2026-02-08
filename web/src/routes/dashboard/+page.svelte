@@ -65,20 +65,16 @@
                     <div class="basis-1/2 md:basis-1/3 p-2 sm:p-4">
                         <a
                             href={item.href}
-                            class="border-2 border-primary shadow-lg/50 p-4 rounded-lg h-full w-full aspect-4/3 bg-base-200 text-primary text-center flex flex-col justify-center items-center gap-2"
+                            class="border-2 border-primary shadow-lg/50 p-4 rounded-lg h-full w-full aspect-4/3 bg-base-200 text-primary text-center flex flex-col justify-center items-center gap-2 md:gap-4"
                         >
                             {@html item.icon}
-                            <p class="text-sm font-bold">
+                            <p class="text-sm md:text-lg font-bold">
                                 {item.nama}
                             </p>
                         </a>
                     </div>
                 {/each}
             </div>
-            <h2 id="Artikel" class="text-2xl font-bold py-6 mt-8 text-center">
-                Artikel
-            </h2>
-            <div class="flex flex-wrap"></div>
         </div>
     </div>
 </main>

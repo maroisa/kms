@@ -9,12 +9,15 @@ import (
 	"context"
 )
 
-const getLink = `-- name: GetLink :many
-SELECT nim, nama, tempat_lahir, tanggal_lahir, angkatan FROM ptik
+const getPtik = `-- name: GetPtik :many
+SELECT
+    id, nim, nama, tempat_lahir, tanggal_lahir, angkatan
+FROM
+    ptik
 `
 
-func (q *Queries) GetLink(ctx context.Context) ([]Ptik, error) {
-	rows, err := q.db.Query(ctx, getLink)
+func (q *Queries) GetPtik(ctx context.Context) ([]Ptik, error) {
+	rows, err := q.db.Query(ctx, getPtik)
 	if err != nil {
 		return nil, err
 	}
@@ -23,6 +26,7 @@ func (q *Queries) GetLink(ctx context.Context) ([]Ptik, error) {
 	for rows.Next() {
 		var i Ptik
 		if err := rows.Scan(
+			&i.ID,
 			&i.Nim,
 			&i.Nama,
 			&i.TempatLahir,

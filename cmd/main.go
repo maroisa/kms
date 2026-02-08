@@ -22,6 +22,9 @@ func main() {
 	queries := db.New(pool)
 	srv := server.NewServer(queries)
 
+	handler := middleware.Logger(srv.Mux)
+	handler = middleware.CORS(handler)
+
 	log.Println("Listening on http://localhost" + port)
-	http.ListenAndServe(port, middleware.Logger(srv.Mux))
+	http.ListenAndServe(port, handler)
 }

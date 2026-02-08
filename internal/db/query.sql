@@ -1,2 +1,4 @@
--- name: GetLink :many
+-- name: GetPtik :many
 SELECT * FROM ptik;
+
+

@@ -9,15 +9,28 @@ import (
 )
 
 type Ptik struct {
-	Nim          int32
+	ID           int32
+	Nim          string
 	Nama         string
 	TempatLahir  string
 	TanggalLahir pgtype.Date
 	Angkatan     pgtype.Int4
 }
 
+type Submission struct {
+	ID     int32
+	UserID pgtype.Int4
+	Img    pgtype.Text
+}
+
+type SubmissionScore struct {
+	ID           int32
+	UserID       pgtype.Int4
+	SubmissionID pgtype.Int4
+}
+
 type User struct {
-	Nim      int32
+	ID       int32
 	Password pgtype.Text
 	Pfp      pgtype.Text
 }
