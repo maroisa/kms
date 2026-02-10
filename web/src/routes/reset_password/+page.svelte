@@ -1,47 +1,36 @@
 <script>
     import { post } from "$lib/utils/api";
-    import { redirect } from "@sveltejs/kit";
 
     let nim = $state("");
     let password = $state("");
 
-    let popupActive = $state(false);
-
-    let popupTimeout = setTimeout(() => {}, 0);
-
     function handleForm(event) {
         event.preventDefault();
-        let data = new FormData(event.target);
-        post("login", data).then((res) => {
+        let formData = new FormData(event.target);
+        post("reset_password", formData).then((res) => {
             if (res.status >= 400) {
-                clearTimeout(popupTimeout);
-                popupActive = true;
-                popupTimeout = setTimeout(() => {
-                    popupActive = false;
-                }, 3000);
                 return;
             }
-            window.location.href = "/dashboard";
+
+            post("login", formData).then((res) => {
+                if (res.status >= 400) {
+                    return;
+                }
+                window.location.href = "/dashboard";
+            });
         });
     }
 </script>
-
-<div class="toast" hidden={!popupActive}>
-    <div class="alert alert-error">
-        <span>Username atau password salah!</span>
-    </div>
-</div>
 
 <main class="flex items-center justify-center">
     <form method="POST" onsubmit={handleForm}>
         <fieldset
             class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
         >
-            <legend class="fieldset-legend">Login</legend>
+            <legend class="fieldset-legend">Reset Password</legend>
 
             <label for="nim" class="label">NIM</label>
             <input
-                bind:value={nim}
                 name="nim"
                 type="text"
                 class="input"
@@ -49,8 +38,11 @@
                 required
             />
 
+            <label for="tanggal_lahir" class="mt-2 label">Tanggal Lahir</label>
+            <input name="tanggal_lahir" type="date" class="input" required />
+
+            <label for="password" class="mt-2 label">Password</label>
             <input
-                bind:value={password}
                 name="password"
                 type="password"
                 class="input"
@@ -58,11 +50,11 @@
                 required
             />
 
-            <a href="/reset_password" class="mt-2 label">
-                Lupa password? <u>Reset</u>
+            <a href="/login" class="mt-2 label">
+                Ingat password? <u>Login</u>
             </a>
 
-            <button type="submit" class="btn btn-primary mt-4">Login</button>
+            <button type="submit" class="btn btn-secondary mt-4">Login</button>
         </fieldset>
     </form>
 </main>

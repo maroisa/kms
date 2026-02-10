@@ -1,5 +1,5 @@
 <script>
-    import ArrowLeftIcon from "./icons/arrow-left.svelte";
+    import ArrowLeftIcon from "./icons/arrowLeft.svelte";
 </script>
 
 <header

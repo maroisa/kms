@@ -2,68 +2,56 @@ package middleware
 
 import (
 	"context"
-	"crypto/sha1"
-	"encoding/hex"
 	"fmt"
-	"io"
-	"kms/internal/server"
+	"kms/internal/utils"
 	"log"
-	"mime/multipart"
 	"net/http"
-	"path/filepath"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
 
+type MyClaims struct {
+	UserID int32 `json:"id"`
+	jwt.RegisteredClaims
+}
+
 func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token, err := r.Cookie("token")
 		if err != nil {
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			log.Println(err.Error())
+			http.Error(w, "Unathorized", 401)
 			return
 		}
 
 		claims, err := verifyToken(token.Value)
 
 		if err != nil {
-			log.Println(err)
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			http.Error(w, "failed to verify token: "+err.Error(), http.StatusInternalServerError)
+			return
 		}
 
-		ctx := context.WithValue(r.Context(), "nim", claims["nim"])
+		ctx := context.WithValue(r.Context(), "id", claims.UserID)
 		r = r.WithContext(ctx)
 
 		next(w, r)
 	}
 }
 
-func createHashName(r io.Reader, fileHeader *multipart.FileHeader) string {
-	newHash := sha1.New()
-	_, err := io.Copy(newHash, r)
-
-	if err != nil {
-		return ""
-	}
-
-	hashHex := hex.EncodeToString(newHash.Sum(nil))
-	shorthash := hashHex[:8]
-	return shorthash + filepath.Ext(fileHeader.Filename)
-}
-
-func createToken(nim int32) (string, error) {
-	secretKey := server.GetSecret()
+func CreateToken(id int32) (string, error) {
+	secretKey := []byte(utils.GetSecret())
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"nim": nim,
+		"id":  id,
 		"exp": time.Now().Add(time.Hour * 72).Unix(),
 	})
 
 	return token.SignedString(secretKey)
 }
 
-func verifyToken(tokenStr string) (map[string]any, error) {
-	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (any, error) {
-		return []byte(server.GetSecret()), nil
+func verifyToken(tokenStr string) (*MyClaims, error) {
+	token, err := jwt.ParseWithClaims(tokenStr, &MyClaims{}, func(t *jwt.Token) (any, error) {
+		return []byte(utils.GetSecret()), nil
 	})
 	if err != nil {
 		return nil, err
@@ -72,5 +60,5 @@ func verifyToken(tokenStr string) (map[string]any, error) {
 		return nil, fmt.Errorf("invalid token")
 	}
 
-	return token.Claims.(jwt.MapClaims), nil
+	return token.Claims.(*MyClaims), nil
 }

@@ -1,2 +1,7 @@
 node_modules/
 tmp/
+assets/uploads/pfp/*
+assets/uploads/submission/*
+
+kms
+main

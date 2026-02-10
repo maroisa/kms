@@ -5,6 +5,7 @@ import (
 	"kms/internal/db"
 	"kms/internal/middleware"
 	"kms/internal/server"
+	"kms/internal/utils"
 	"log"
 	"net/http"
 
@@ -12,13 +13,13 @@ import (
 )
 
 func main() {
-	pool, err := pgxpool.New(context.Background(), server.GetDatabaseUrl())
+	pool, err := pgxpool.New(context.Background(), utils.GetDatabaseUrl())
 	if err != nil {
 		log.Fatalln("Unable to create connection pool:", err.Error())
 	}
 
-	port := server.GetPort()
-	_ = server.GetSecret()
+	port := utils.GetPort()
+	_ = utils.GetSecret()
 
 	queries := db.New(pool)
 	srv := server.NewServer(queries)

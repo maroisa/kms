@@ -9,7 +9,7 @@ CREATE TABLE ptik (
 
 CREATE TABLE users (
     id INT PRIMARY KEY REFERENCES ptik (id),
-    password VARCHAR(16),
+    password VARCHAR(128),
     pfp VARCHAR(16)
 );
 

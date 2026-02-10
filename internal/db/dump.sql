@@ -14,7 +14,7 @@ CREATE TABLE ptik (
 
 CREATE TABLE users (
     id INT PRIMARY KEY REFERENCES ptik (id),
-    password VARCHAR(16),
+    password VARCHAR(128),
     pfp VARCHAR(16)
 );
 
@@ -120,14 +120,14 @@ INSERT INTO ptik (nim, nama, tempat_lahir, tanggal_lahir,angkatan) VALUES
 ('K3524086', 'Jinan Ramadhan Atllah', 'Semarang', '2005/10/31', 2024) ;
 
 INSERT INTO users VALUES
-(84, NULL),
-(70, NULL),
-(4, NULL),
-(37, NULL),
-(44, NULL),
-(55, NULL),
-(62, NULL),
-(15, NULL),
-(69, NULL),
-(64, NULL),
-(24, NULL) ;
+(84,NULL, NULL),
+(70,NULL, 'c1002281.jpg'),
+(4,NULL, '422cdf78.png'),
+(37,NULL, '75542634.jpg'),
+(44,NULL, NULL),
+(55,NULL, '4d5e85c5.png'),
+(62,NULL, 'f3d4d1d1.jpg'),
+(15,NULL, NULL),
+(69,NULL, 'd4c86ac8.jpg'),
+(64,NULL, '1bd86843.jpeg'),
+(24,NULL, NULL) ;
