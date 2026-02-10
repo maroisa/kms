@@ -1,25 +1,40 @@
-# KMS
+## KMS
 
-website khusus member KMS
+### Requirement
+- Go 1.24
+  - [sqlc](https://docs.sqlc.dev/en/stable/overview/install.html)
+  - [air](https://github.com/air-verse/air) (optional for hot reloading)
 
-## Setup
-### Requirements:
-- Go > 1.10
-- Node.js >= 18
-- PostgreSQL
+- npm or pnpm
 
-### Dev
+### Setup
 
-**Frontend:**
+1. clone the project 
 ```bash
-npm install # to install required dependencies
-npm run dev # to run dev
-npm run build # to build production
+git clone https://github.com/maroisa/go-maro.git && cd go-maro
+
+# -- backend --
+2. Download the required dependencies
+go mod download
+
+# -- frontend --
+cd web
+pnpm install # or npm install
 ```
 
-**Backend:**
+2. Frontend only development
 ```bash
-go mod download # to get required packages
-go run . # to run dev
-go build . # to build production
+cd web
+pnpm dev
+```
+
+3. Fullstack development
+```bash
+cd web
+pnpm build
+
+cd ..
+go run cmd/main.go
+# or if you have air
+air
 ```

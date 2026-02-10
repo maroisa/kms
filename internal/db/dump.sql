@@ -1,0 +1,133 @@
+DROP TABLE IF EXISTS submission_score;
+DROP TABLE IF EXISTS submission;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS ptik;
+
+CREATE TABLE ptik (
+    id SERIAL PRIMARY KEY,
+    nim VARCHAR(64) NOT NULL UNIQUE,
+    nama VARCHAR(64) NOT NULL,
+    tempat_lahir VARCHAR(16) NOT NULL,
+    tanggal_lahir DATE NOT NULL,
+    angkatan INTEGER
+);
+
+CREATE TABLE users (
+    id INT PRIMARY KEY REFERENCES ptik (id),
+    password VARCHAR(128),
+    pfp VARCHAR(16)
+);
+
+CREATE TABLE submission (
+    id SERIAL PRIMARY KEY NOT NULL,
+    user_id INTEGER REFERENCES users (id) UNIQUE,
+    img VARCHAR(16) UNIQUE
+);
+
+CREATE TABLE submission_score (
+    id SERIAL PRIMARY KEY NOT NULL,
+    user_id INTEGER REFERENCES users (id) UNIQUE,
+    submission_id INTEGER REFERENCES submission (id)
+);
+
+
+INSERT INTO ptik (nim, nama, tempat_lahir, tanggal_lahir,angkatan) VALUES
+('K3524001', 'Adelia Rosa Permata', 'Sragen', '2006/04/18', 2024),
+('K3524002', 'Adinda Putri Utami', 'Kebumen', '2006/06/10', 2024),
+('K3524003', 'Ahmad Dhani Kusuma', 'Jakarta', '2005/11/22', 2024),
+('K3524004', 'Ahmad Roisul Ahsan', 'Sukoharjo', '2006/05/03', 2024),
+('K3524005', 'Aldrin Gelsen Damanik', 'Tangerang', '2006/04/16', 2024),
+('K3524006', 'Andifa Fais Pratama', 'Boyolali', '2005/11/02', 2024),
+('K3524007', 'Arif Nur Hidayah', 'Cilacap', '2006/01/04', 2024),
+('K3524008', 'Atikah Salsabila', 'Sukoharjo', '2005/07/26', 2024),
+('K3524009', 'Difa Az-Zahra Hakim', 'Cilacap', '2006/04/05', 2024),
+('K3524010', 'Faiz Faadillah', 'Surakarta', '2006/04/08', 2024),
+('K3524011', 'Hasna Fata Hamidah', 'Klaten', '2006/05/25', 2024),
+('K3524012', 'Herlina Dwi Septiana', 'Banyumas', '2006/09/03', 2024),
+('K3524013', 'Kania Adha Gayatri', 'Sukoharjo', '2006/01/10', 2024),
+('K3524014', 'Merallda Prisca Daniza', 'Surakarta', '2006/06/04', 2024),
+('K3524015', 'Naufal Daaris Farqad', 'Pekalongan', '2005/12/05', 2024),
+('K3524016', 'Winda Luthfi Itsnaini', 'Sukoharjo', '2006/03/31', 2024),
+('K3524017', 'Yardan Raditya Laksana', 'Karanganyar', '2005/09/22', 2024),
+('K3524018', 'Ade Amanah Putri', 'Magetan', '2004/10/07', 2024),
+('K3524019', 'Afifah Zahrotul Khoir Sarifudin', 'Jakarta', '2005/09/08', 2024),
+('K3524020', 'Afridya Dexa Wahnugrah', 'Klaten', '2006/01/01', 2024),
+('K3524021', 'Akhilla Tjandra Ratri', 'Ende', '2006/09/19', 2024),
+('K3524022', 'Aliswandani Nashifa Salsabila Putra', 'Surakarta', '2005/07/31', 2024),
+('K3524023', 'Ani Nuri Azizah', 'Sragen', '2006/08/05', 2024),
+('K3524024', 'Cristian Alex Mulyawan', 'Sangatta', '2006/02/27', 2024),
+('K3524025', 'Dhafin Rifki Bayu Santoso', 'Boyolali', '2004/07/02', 2024),
+('K3524026', 'Giga Hidro Madani', 'Boyolali', '2006/04/24', 2024),
+('K3524027', 'Khoirul Lathifah Oktaviani', 'Karanganyar', '2004/10/21', 2024),
+('K3524028', 'Maulana Mikola Achmad', 'Semarang', '2006/05/18', 2024),
+('K3524029', 'Muhamad Haikal Rizaldi', 'Boyolali', '2005/08/09', 2024),
+('K3524030', 'Muhammad Rafli Rafsanjani', 'Wonogiri', '2006/01/11', 2024),
+('K3524031', 'Narendra Lintang Saputra', 'Klaten', '2006/04/05', 2024),
+('K3524032', 'Rifat Saifulloh', 'Bogor', '2005/05/13', 2024),
+('K3524033', 'Rifkhi Ardi Mustaqim', 'Sragen', '2004/09/27', 2024),
+('K3524034', 'Ryan Ivan Pratama', 'Jakarta', '2006/06/13', 2024),
+('K3524035', 'Salsabila Fitriasani', 'Sukoharjo', '2005/12/06', 2024),
+('K3524036', 'Salsabila Khoiriyatin Nur Isnaini', 'Pati', '2007/01/16', 2024),
+('K3524037', 'Tedy Darmawan', 'Surakarta', '2006/08/04', 2024),
+('K3524038', 'Yusuf Nurul Huda', 'Wonogiri', '2006/03/19', 2024),
+('K3524039', 'Aghniya Adz-Dzikri', 'Sukoharjo', '2005/09/23', 2024),
+('K3524040', 'Ahmad Fathoni Nur Mahmudi', 'Sragen', '2006/05/18', 2024),
+('K3524041', 'Airin Zulaikha', 'Klaten', '2005/08/07', 2024),
+('K3524042', 'Alfarani Mayra Budiyona Putri', 'Boyolali', '2006/05/17', 2024),
+('K3524043', 'Ammar Rozan Annafi', 'Surakarta', '2006/01/24', 2024),
+('K3524044', 'Angger Cahya Utama', 'Boyolali', '2005/12/12', 2024),
+('K3524045', 'Anisa Ramadhani', 'Ngawi', '2005/10/27', 2024),
+('K3524046', 'Athaya Alifia Zahra', 'Wonosobo', '2006/03/14', 2024),
+('K3524047', 'Aulya Prastika Dewi', 'Sukoharjo', '2006/07/25', 2024),
+('K3524048', 'Cahaya Fitri Ramadhani', 'Martapura', '2006/10/23', 2024),
+('K3524049', 'Eka Putra Noandheli', 'Gunungkidul', '2004/11/20', 2024),
+('K3524050', 'Estu Setyoadi Galih Ramadani', 'Klaten', '2004/11/09', 2024),
+('K3524051', 'Fahma Zoeyya Vella', 'Ponorogo', '2006/05/16', 2024),
+('K3524052', 'Fatih Nur Faiq', 'Sukoharjo', '2005/08/23', 2024),
+('K3524053', 'Galang Nur Seto', 'Boyolali', '2006/05/14', 2024),
+('K3524054', 'Ghali Shiddiq Fatullah', 'Taluk Kuantan', '2007/04/12', 2024),
+('K3524055', 'Hafidz Alif Ramadhan', 'Klaten', '2005/10/05', 2024),
+('K3524056', 'Hammam Dhiyaulhaq', 'Purworejo', '2005/12/17', 2024),
+('K3524057', 'Maulana Albar Cassano', 'Boyolali', '2005/12/01', 2024),
+('K3524058', 'Muhammad Dava Syahputra', 'Batam', '2005/11/17', 2024),
+('K3524059', 'Muhammad Irfan Maulana', 'Surakarta', '2006/04/10', 2024),
+('K3524060', 'Muhammad Raihan Faza', 'Karanganyar', '2006/04/23', 2024),
+('K3524061', 'Muhammad Ridwan Auliansyach', 'Magelang', '2005/09/16', 2024),
+('K3524062', 'Nadhif Athaasyam Nurdewana', 'Sukoharjo', '2006/08/22', 2024),
+('K3524063', 'Natasya Luthfia Ramadhani', 'Karanganyar', '2005/10/12', 2024),
+('K3524064', 'Naufal Hanif Satria Wijayanto', 'Gunungkidul', '2005/08/22', 2024),
+('K3524065', 'Rakha Admaja Sukendra', 'Sukoharjo', '2006/08/13', 2024),
+('K3524066', 'Reynardus Werner R. Sanda', 'Jayapura', '2005/12/05', 2024),
+('K3524067', 'Rofi Arrozy As-Salimi', 'Klaten', '2006/04/13', 2024),
+('K3524068', 'Umar Adiwinata', 'Semarang', '2006/02/14', 2024),
+('K3524069', 'Varrel Ferryanto', 'Sragen', '2006/07/30', 2024),
+('K3524070', 'Yusharyahya Al-Ghifari', 'Surakarta', '2004/10/28', 2024),
+('K3524071', 'Zukhrufa NaIlah Rohmah', 'Klaten', '2006/12/04', 2024),
+('K3524072', 'Afifah Zahrah Muthmainnah', 'Bandung', '2002/11/01', 2024),
+('K3524073', 'Alan Tuguh Wibowo', 'Wonogiri', '2006/08/06', 2024),
+('K3524074', 'Fania Apriyanti Zulfa', 'Sragen', '2006/04/03', 2024),
+('K3524075', 'Felix Trinidat', 'Selangor', '2004/03/17', 2024),
+('K3524076', 'Hafiz Irsyad Al Thof', 'Sragen', '2005/11/19', 2024),
+('K3524077', 'Khoirul Bagus Wicaksono', 'Semarang', '2006/08/24', 2024),
+('K3524078', 'Marcelius Nathanael Lauris', 'Klaten', '2005/04/29', 2024),
+('K3524079', 'Muhamad Rafly Caesario', 'Bekasi', '2005/11/17', 2024),
+('K3524080', 'Muhammad Ramdhani', 'Klaten', '2006/02/23', 2024),
+('K3524081', 'Nabila Shafa Salsabila Nurhardriani', 'Kendal', '2007/03/20', 2024),
+('K3524082', 'Nadhira Zulsyifa Sustiyani', 'Grobogan', '2007/01/10', 2024),
+('K3524083', 'Uswatun Chasanah', 'Sukoharjo', '2005/12/05', 2024),
+('K3524084', 'Wava Al Qudsi', 'Salatiga', '2005/11/01', 2024),
+('K3524085', 'Abiyusafa Noer Rosyadi Agam', 'Sukoharjo', '2005/07/06', 2024),
+('K3524086', 'Jinan Ramadhan Atllah', 'Semarang', '2005/10/31', 2024) ;
+
+INSERT INTO users VALUES
+(84,NULL, NULL),
+(70,NULL, 'c1002281.jpg'),
+(4,NULL, '422cdf78.png'),
+(37,NULL, '75542634.jpg'),
+(44,NULL, NULL),
+(55,NULL, '4d5e85c5.png'),
+(62,NULL, 'f3d4d1d1.jpg'),
+(15,NULL, NULL),
+(69,NULL, 'd4c86ac8.jpg'),
+(64,NULL, '1bd86843.jpeg'),
+(24,NULL, NULL) ;
