@@ -1,32 +1,7 @@
-dist
-distribute.sh
-api/uploads/
-./api/kms-api
-.wrangler
-.output
-.vercel
-.netlify
-.vinxi
-app.config.timestamp_*.js
-.vscode/
+node_modules/
+tmp/
+assets/uploads/pfp/*
+assets/uploads/submission/*
 
-# Environment
-.env
-.env*.local
-
-# dependencies
-/node_modules
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-*.launch
-.settings/
-
-# Temp
-gitignore
-
-# System Files
-.DS_Store
-Thumbs.db
+kms
+main
