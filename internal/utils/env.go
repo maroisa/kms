@@ -30,3 +30,16 @@ func GetSecret() string {
 	}
 	return secret
 }
+
+func GetDevMode() bool {
+	devMode := os.Getenv("DEV")
+	switch devMode {
+	case "0":
+		return false
+	case "1":
+		return true
+	default:
+		log.Println("DEV is not set. Default to true")
+		return true
+	}
+}

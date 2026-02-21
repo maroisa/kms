@@ -24,6 +24,7 @@ func (s *Server) RegisterRoutes() {
 	s.Mux.HandleFunc("POST /api/logout", s.logout)
 	s.Mux.HandleFunc("GET /api/ptik", middleware.AuthMiddleware(s.getPtik))
 	s.Mux.HandleFunc("GET /api/user", middleware.AuthMiddleware(s.getUser))
+	s.Mux.HandleFunc("PATCH /api/user/pfp", middleware.AuthMiddleware(s.patchUserProfile))
 	s.Mux.HandleFunc("GET /auth", middleware.AuthMiddleware(s.getAuth))
 	s.Mux.Handle("/uploads/", http.StripPrefix("/uploads", http.FileServer(http.Dir("assets/uploads"))))
 	s.Mux.Handle("/", s.getIndex())
@@ -171,3 +172,6 @@ func (s *Server) resetPw(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) getAuth(w http.ResponseWriter, r *http.Request) {}
+
+func (s *Server) patchUserProfile(w http.ResponseWriter, r *http.Request) {
+}

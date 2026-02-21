@@ -8,6 +8,14 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type Post struct {
+	ID        int32
+	Title     pgtype.Text
+	Content   pgtype.Text
+	UserID    pgtype.Int4
+	CreatedAt pgtype.Date
+}
+
 type Ptik struct {
 	ID           int32
 	Nim          string
