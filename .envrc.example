@@ -1,0 +1,2 @@
+export DATABASE_URL="postgresql://USER:PASSWORD@HOST/DB?sslmode=disable"
+export SECRET=""
