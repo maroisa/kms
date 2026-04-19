@@ -35,9 +35,8 @@
                         <div>
                             {#if tugas.Link}
                                 <p>Links:</p>
-                                <a
-                                    class="link block"
-                                    href={"https://" + tugas.Link}>{link}</a
+                                <a class="link block" href={tugas.Link}
+                                    >{tugas.Link}</a
                                 >
                             {/if}
                         </div>
