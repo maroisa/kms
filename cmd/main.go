@@ -26,6 +26,7 @@ func main() {
 
 	handler := middleware.Logger(srv.Mux)
 	handler = middleware.CORS(handler)
+	handler = middleware.Cache(handler)
 
 	log.Println("Listening on http://localhost" + port)
 	http.ListenAndServe(port, handler)
