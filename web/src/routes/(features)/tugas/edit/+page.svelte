@@ -3,18 +3,26 @@
     import { get, put } from "$lib/utils/api.js";
     import Pencil from "$lib/icons/pencil.svelte";
     import ArrowLeft from "$lib/icons/arrowLeft.svelte";
-    let { params } = $props();
+    import { page } from "$app/stores";
 
     let data = $state({});
+    const tugasID = $page.url.searchParams.get("id");
 
     onMount(() => {
-        get("tugas/" + params.slug).then((res) => (data = res));
+        get("tugas/" + tugasID)
+            .then((res) => {
+                data = res;
+            })
+            .catch((err) => {
+                alert("ID tidak ditemukan!");
+                window.location.href = "..";
+            });
     });
 
     function submitForm(event) {
         event.preventDefault();
         let formData = new FormData(event.target);
-        put("tugas/" + params.slug, formData).then((res) => {
+        put("tugas/" + tugasID, formData).then((res) => {
             if (res.status == 200) {
                 window.location.href = "/tugas";
             } else alert("Gagal update!");

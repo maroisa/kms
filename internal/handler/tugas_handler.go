@@ -41,8 +41,7 @@ func (s *Server) getTugas(w http.ResponseWriter, r *http.Request) {
 
 	tugas, err := s.DB.GetTugas(r.Context(), int32(tugasID))
 	if err != nil {
-		w.Header().Set("content-type", "application/json")
-		w.Write([]byte("[]"))
+		http.Error(w, "ID tidak ditemukan!", 400)
 		return
 	}
 

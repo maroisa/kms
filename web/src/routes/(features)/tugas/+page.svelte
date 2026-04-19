@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <a
-                        href={tugas.ID}
+                        href={"edit?id=" + tugas.ID}
                         class="btn rounded-none flex md:flex-col w-full md:w-auto md:py-8 mx-4"
                     >
                         <span>
