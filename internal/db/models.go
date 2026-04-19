@@ -8,14 +8,6 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-type Post struct {
-	ID        int32
-	Title     pgtype.Text
-	Content   pgtype.Text
-	UserID    pgtype.Int4
-	CreatedAt pgtype.Date
-}
-
 type Ptik struct {
 	ID           int32
 	Nim          string
@@ -25,16 +17,13 @@ type Ptik struct {
 	Angkatan     pgtype.Int4
 }
 
-type Submission struct {
-	ID     int32
-	UserID pgtype.Int4
-	Img    pgtype.Text
-}
-
-type SubmissionScore struct {
-	ID           int32
-	UserID       pgtype.Int4
-	SubmissionID pgtype.Int4
+type Tuga struct {
+	ID        int32
+	Nama      string
+	Matkul    string
+	Deskripsi string
+	Deadline  pgtype.Date
+	Link      pgtype.Text
 }
 
 type User struct {

@@ -20,7 +20,7 @@
 {#if isAuth}
     <div class="flex flex-col h-full">
         <BackNavbar />
-        <main class="grow overflow-auto">
+        <main class="grow overflow-auto bg-base-200">
             {@render children()}
         </main>
     </div>

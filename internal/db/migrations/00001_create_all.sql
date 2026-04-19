@@ -14,17 +14,18 @@ CREATE TABLE users (
     pfp VARCHAR(16)
 );
 
-CREATE TABLE submission (
-    id SERIAL PRIMARY KEY NOT NULL,
-    user_id INTEGER REFERENCES users (id) UNIQUE,
-    img VARCHAR(16) UNIQUE
+CREATE TABLE tugas (
+    id SERIAL PRIMARY KEY,
+    nama VARCHAR(64) NOT NULL,
+    matkul VARCHAR(64) NOT NULL,
+    deskripsi TEXT NOT NULL,
+    deadline DATE DEFAULT CURRENT_DATE,
+    link TEXT
 );
 
-CREATE TABLE submission_score (
-    id SERIAL PRIMARY KEY NOT NULL,
-    user_id INTEGER REFERENCES users (id) UNIQUE,
-    submission_id INTEGER REFERENCES submission (id)
-);
+INSERT INTO tugas (nama, matkul, deskripsi, deadline) VALUES
+('Presentasi BK', 'Bimbingan dan Konseling', 'AHAAHA', '2024-05-03'),
+('Presentasi BK', 'Bimbingan dan Konseling', 'menyiapkan makalah dan ppt', '2026-05-03');
 
 INSERT INTO ptik (nim, nama, tempat_lahir, tanggal_lahir,angkatan) VALUES
 ('K3524001', 'Adelia Rosa Permata', 'Sragen', '2006/04/18', 2024),
@@ -128,7 +129,6 @@ INSERT INTO users VALUES
 (24,NULL, NULL);
 
 -- +goose Down
-DROP TABLE IF EXISTS submission_score;
-DROP TABLE IF EXISTS submission;
+DROP TABLE IF EXISTS tugas;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS ptik;

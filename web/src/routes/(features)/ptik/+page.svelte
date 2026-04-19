@@ -37,7 +37,7 @@
     });
 </script>
 
-<div class="min-h-full flex flex-col bg-base-200/90">
+<div class="min-h-full flex flex-col">
     {#if ptik.length == 0}
         <div class="flex grow justify-center items-center">
             <img

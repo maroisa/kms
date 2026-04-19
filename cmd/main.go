@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"kms/internal/db"
+	"kms/internal/handler"
 	"kms/internal/middleware"
-	"kms/internal/server"
 	"kms/internal/utils"
 	"log"
 	"net/http"
@@ -22,7 +22,7 @@ func main() {
 	_ = utils.GetSecret()
 
 	queries := db.New(pool)
-	srv := server.NewServer(queries)
+	srv := handler.NewServer(queries)
 
 	handler := middleware.Logger(srv.Mux)
 	handler = middleware.CORS(handler)

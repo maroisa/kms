@@ -27,6 +27,29 @@ func (q *Queries) CheckUser(ctx context.Context, nim string) (CheckUserRow, erro
 	return i, err
 }
 
+const createTugas = `-- name: CreateTugas :exec
+insert into tugas (nama, matkul, deskripsi, deadline, link) values ($1, $2, $3, $4, $5)
+`
+
+type CreateTugasParams struct {
+	Nama      string
+	Matkul    string
+	Deskripsi string
+	Deadline  pgtype.Date
+	Link      pgtype.Text
+}
+
+func (q *Queries) CreateTugas(ctx context.Context, arg CreateTugasParams) error {
+	_, err := q.db.Exec(ctx, createTugas,
+		arg.Nama,
+		arg.Matkul,
+		arg.Deskripsi,
+		arg.Deadline,
+		arg.Link,
+	)
+	return err
+}
+
 const getPtik = `-- name: GetPtik :many
 select id, nim, nama, tempat_lahir, tanggal_lahir, angkatan from ptik
 `
@@ -58,6 +81,24 @@ func (q *Queries) GetPtik(ctx context.Context) ([]Ptik, error) {
 	return items, nil
 }
 
+const getTugas = `-- name: GetTugas :one
+select id, nama, matkul, deskripsi, deadline, link from tugas where id = $1
+`
+
+func (q *Queries) GetTugas(ctx context.Context, id int32) (Tuga, error) {
+	row := q.db.QueryRow(ctx, getTugas, id)
+	var i Tuga
+	err := row.Scan(
+		&i.ID,
+		&i.Nama,
+		&i.Matkul,
+		&i.Deskripsi,
+		&i.Deadline,
+		&i.Link,
+	)
+	return i, err
+}
+
 const getUser = `-- name: GetUser :one
 select users.id, pfp, nim, nama, tempat_lahir, tanggal_lahir, angkatan from users join ptik using (id) where users.id = $1 LIMIT 1
 `
@@ -87,6 +128,68 @@ func (q *Queries) GetUser(ctx context.Context, id int32) (GetUserRow, error) {
 	return i, err
 }
 
+const listTugas = `-- name: ListTugas :many
+select id, nama, matkul, deskripsi, deadline, link from tugas where deadline >= CURRENT_DATE
+`
+
+func (q *Queries) ListTugas(ctx context.Context) ([]Tuga, error) {
+	rows, err := q.db.Query(ctx, listTugas)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Tuga
+	for rows.Next() {
+		var i Tuga
+		if err := rows.Scan(
+			&i.ID,
+			&i.Nama,
+			&i.Matkul,
+			&i.Deskripsi,
+			&i.Deadline,
+			&i.Link,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listTugasLama = `-- name: ListTugasLama :many
+select id, nama, matkul, deskripsi, deadline, link from tugas where deadline <= CURRENT_DATE
+`
+
+func (q *Queries) ListTugasLama(ctx context.Context) ([]Tuga, error) {
+	rows, err := q.db.Query(ctx, listTugasLama)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Tuga
+	for rows.Next() {
+		var i Tuga
+		if err := rows.Scan(
+			&i.ID,
+			&i.Nama,
+			&i.Matkul,
+			&i.Deskripsi,
+			&i.Deadline,
+			&i.Link,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const updatePassword = `-- name: UpdatePassword :exec
 update users set password = $1 from ptik where users.id = ptik.id and nim = $2 and tanggal_lahir = $3
 `
@@ -99,5 +202,30 @@ type UpdatePasswordParams struct {
 
 func (q *Queries) UpdatePassword(ctx context.Context, arg UpdatePasswordParams) error {
 	_, err := q.db.Exec(ctx, updatePassword, arg.Password, arg.Nim, arg.TanggalLahir)
+	return err
+}
+
+const updateTugas = `-- name: UpdateTugas :exec
+update tugas set nama = $2, matkul = $3, deskripsi = $4, deadline = $5, link = $6 where id = $1
+`
+
+type UpdateTugasParams struct {
+	ID        int32
+	Nama      string
+	Matkul    string
+	Deskripsi string
+	Deadline  pgtype.Date
+	Link      pgtype.Text
+}
+
+func (q *Queries) UpdateTugas(ctx context.Context, arg UpdateTugasParams) error {
+	_, err := q.db.Exec(ctx, updateTugas,
+		arg.ID,
+		arg.Nama,
+		arg.Matkul,
+		arg.Deskripsi,
+		arg.Deadline,
+		arg.Link,
+	)
 	return err
 }

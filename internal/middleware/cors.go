@@ -9,7 +9,7 @@ func CORS(next http.Handler) http.Handler {
 	allowedOrigin := "https://kms.maroisa.org"
 	dev := utils.GetDevMode()
 	if dev {
-		allowedOrigin = "http://localhost:3000"
+		allowedOrigin = "http://localhost:5173"
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

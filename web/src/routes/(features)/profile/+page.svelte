@@ -3,7 +3,8 @@
     import { onMount } from "svelte";
 
     import LogoutPopup from "$lib/LogoutPopup.svelte";
-    import { BASE_URL, checkAuth, get } from "$lib/utils/api";
+    import { checkAuth, get } from "$lib/utils/api";
+    import { PUBLIC_API_URL } from "$env/static/public";
 
     let data = $state({});
 
@@ -22,7 +23,7 @@
 
 <LogoutPopup active={popupActive} toggleActive={togglePopupActive} />
 
-<div class="h-full flex justify-center items-center bg-base-200">
+<div class="h-full flex justify-center items-center p-2">
     <div
         class="p-6 flex flex-col grow max-w-2xl sm:mx-auto sm:min-w-xl gap-8 bg-base-100 rounded-lg border-2 border-white/10"
     >
@@ -30,7 +31,10 @@
             <div class="avatar">
                 <div class="w-40 rounded-full">
                     {#if data.Pfp}
-                        <img src="{BASE_URL}uploads/pfp/{data.Pfp}" alt="" />
+                        <img
+                            src="{PUBLIC_API_URL}uploads/pfp/{data.Pfp}"
+                            alt=""
+                        />
                     {:else}
                         <div class="skeleton rounded-full h-full"></div>
                     {/if}

@@ -1,27 +1,37 @@
-export const BASE_URL = "http://localhost:3000/"
+import { PUBLIC_API_URL } from "$env/static/public";
 
 export async function get(url) {
-    const res = await fetch(BASE_URL + "api/" + url, {
-        credentials: "include"
-    })
-    const json = await res.json()
-    return json
+    const res = await fetch(PUBLIC_API_URL + "api/" + url, {
+        credentials: "include",
+    });
+    const json = await res.json();
+    return json;
 }
 
 export async function post(url, data) {
-    const res = await fetch(BASE_URL + "api/" + url, {
+    const res = await fetch(PUBLIC_API_URL + "api/" + url, {
         credentials: "include",
         method: "POST",
-        body: data
-    })
-    return res
+        body: data,
+    });
+    return res;
+}
+
+export async function put(url, data) {
+    const res = await fetch(PUBLIC_API_URL + "api/" + url, {
+        credentials: "include",
+        method: "PUT",
+        body: data,
+    });
+    return res;
 }
 
 export async function checkAuth() {
-    const res = await fetch(BASE_URL + "auth", { credentials: "include" })
+    const res = await fetch(PUBLIC_API_URL + "auth", {
+        credentials: "include",
+    });
     if (res.status >= 400) {
-        return false
+        return false;
     }
-    return true
+    return true;
 }
-
