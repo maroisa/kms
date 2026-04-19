@@ -160,7 +160,7 @@ func (q *Queries) ListTugas(ctx context.Context) ([]Tuga, error) {
 }
 
 const listTugasLama = `-- name: ListTugasLama :many
-select id, nama, matkul, deskripsi, deadline, link from tugas where deadline <= CURRENT_DATE ORDER BY deadline
+select id, nama, matkul, deskripsi, deadline, link from tugas where deadline < CURRENT_DATE ORDER BY deadline
 `
 
 func (q *Queries) ListTugasLama(ctx context.Context) ([]Tuga, error) {

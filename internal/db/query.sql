@@ -14,7 +14,7 @@ select users.id, pfp, nim, nama, tempat_lahir, tanggal_lahir, angkatan from user
 select * from tugas where deadline >= CURRENT_DATE ORDER BY deadline;
 
 -- name: ListTugasLama :many
-select * from tugas where deadline <= CURRENT_DATE ORDER BY deadline;
+select * from tugas where deadline < CURRENT_DATE ORDER BY deadline;
 
 -- name: GetTugas :one
 select * from tugas where id = $1;
