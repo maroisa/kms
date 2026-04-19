@@ -1,11 +1,14 @@
 <script>
     import SkeletonWebp from "$lib/assets/skeleton.webp";
     import dashboardItem from "$lib/dashboardItem";
+    import ArrowDownSolid from "$lib/icons/arrowDownSolid.svelte";
     import Bars3Icon from "$lib/icons/bars3.svelte";
-    import { checkAuth } from "$lib/utils/api";
+    import { checkAuth, get } from "$lib/utils/api";
     import { onMount } from "svelte";
 
     let isAuth = $state(false);
+
+    let tugas = $state([]);
 
     onMount(() => {
         checkAuth().then((res) => {
@@ -14,6 +17,7 @@
                 window.location.href = "/login";
             }
         });
+        get("tugas").then((res) => (tugas = res));
     });
 </script>
 
@@ -36,30 +40,22 @@
                             tabindex="-1"
                             class="menu menu-md dropdown-content bg-base-100 z-1 p-2 w-52"
                         >
-                            <li>
-                                <a href="/ptik">Mahasiswa PTIK</a>
-                            </li>
-                            <li>
-                                <a href="/profile">Profil</a>
-                            </li>
-                            <li>
-                                <a href="/jadwal">Jadwal</a>
-                            </li>
+                            {#each dashboardItem as item}
+                                <li>
+                                    <a href={item.href}>{item.nama}</a>
+                                </li>
+                            {/each}
                         </ul>
                     </div>
-                    <a class="btn btn-ghost text-xl">KMS</a>
+                    <a href="#" class="btn btn-ghost text-xl">KMS</a>
                 </div>
                 <div class="navbar-center hidden lg:flex">
                     <ul class="menu menu-horizontal font-semibold">
-                        <li>
-                            <a href="/ptik">Mahasiswa PTIK</a>
-                        </li>
-                        <li>
-                            <a href="/profile">Profil</a>
-                        </li>
-                        <li>
-                            <a href="/jadwal">Jadwal</a>
-                        </li>
+                        {#each dashboardItem as item}
+                            <li>
+                                <a href={item.href}>{item.nama}</a>
+                            </li>
+                        {/each}
                     </ul>
                 </div>
                 <div class="navbar-end"></div>
@@ -92,6 +88,33 @@
         </div>
         <div class="bg-base-100 border-t-2 border-t-primary p-2">
             <div class="max-w-6xl mx-auto">
+                <h2
+                    id="timeline-tugas"
+                    class="text-2xl font-bold py-6 text-center"
+                >
+                    Timeline Tugas
+                </h2>
+                <ul class="timeline timeline-vertical pb-5">
+                    {#each tugas as t}
+                        <li>
+                            <hr class="bg-primary" />
+                            <div
+                                class="timeline-start timeline-box border-white text-md md:text-lg"
+                            >
+                                {t.Deadline}
+                            </div>
+                            <div class="timeline-middle">
+                                <ArrowDownSolid />
+                            </div>
+                            <div
+                                class="timeline-end timeline-box border-white text-md md:text-lg"
+                            >
+                                {t.Nama}
+                            </div>
+                            <hr class="bg-primary" />
+                        </li>
+                    {/each}
+                </ul>
                 <h2 id="fitur" class="text-2xl font-bold py-6 mt-8 text-center">
                     Fitur
                 </h2>
