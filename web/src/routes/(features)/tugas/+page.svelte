@@ -50,7 +50,7 @@
                     </a>
                 </div>
             {/each}
-            <div class="flex gap-2">
+            <div class="flex flex-col md:flex-row md:gap-2">
                 <a
                     href="tambah"
                     class="btn btn-outline btn-primary rounded-none mt-4 md:w-max"
