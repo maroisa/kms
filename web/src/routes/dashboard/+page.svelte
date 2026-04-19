@@ -1,6 +1,7 @@
 <script>
     import SkeletonWebp from "$lib/assets/skeleton.webp";
     import dashboardItem from "$lib/dashboardItem";
+    import formatDate from "$lib/formatDate";
     import ArrowDownSolid from "$lib/icons/arrowDownSolid.svelte";
     import Bars3Icon from "$lib/icons/bars3.svelte";
     import { checkAuth, get } from "$lib/utils/api";
@@ -101,7 +102,7 @@
                             <div
                                 class="timeline-start timeline-box border-white text-md md:text-lg"
                             >
-                                {t.Deadline}
+                                {formatDate(t.Deadline)}
                             </div>
                             <div class="timeline-middle">
                                 <ArrowDownSolid />

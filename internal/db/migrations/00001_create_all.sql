@@ -23,10 +23,6 @@ CREATE TABLE tugas (
     link TEXT
 );
 
-INSERT INTO tugas (nama, matkul, deskripsi, deadline) VALUES
-('Presentasi BK', 'Bimbingan dan Konseling', 'AHAAHA', '2024-05-03'),
-('Presentasi BK', 'Bimbingan dan Konseling', 'menyiapkan makalah dan ppt', '2026-05-03');
-
 INSERT INTO ptik (nim, nama, tempat_lahir, tanggal_lahir,angkatan) VALUES
 ('K3524001', 'Adelia Rosa Permata', 'Sragen', '2006/04/18', 2024),
 ('K3524002', 'Adinda Putri Utami', 'Kebumen', '2006/06/10', 2024),
@@ -117,8 +113,8 @@ INSERT INTO ptik (nim, nama, tempat_lahir, tanggal_lahir,angkatan) VALUES
 
 INSERT INTO users VALUES
 (84,NULL, NULL),
-(70,NULL, 'c1002281.jpg'),
-(4,NULL, '422cdf78.png'),
+(70, NULL, 'c1002281.jpg'),
+(4, NULL, '422cdf78.png'),
 (37,NULL, '75542634.jpg'),
 (44,NULL, NULL),
 (55,NULL, '4d5e85c5.png'),

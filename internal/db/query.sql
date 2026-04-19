@@ -11,10 +11,10 @@ update users set password = $1 from ptik where users.id = ptik.id and nim = $2 a
 select users.id, pfp, nim, nama, tempat_lahir, tanggal_lahir, angkatan from users join ptik using (id) where users.id = $1 LIMIT 1;
 
 -- name: ListTugas :many
-select * from tugas where deadline >= CURRENT_DATE;
+select * from tugas where deadline >= CURRENT_DATE ORDER BY deadline;
 
 -- name: ListTugasLama :many
-select * from tugas where deadline <= CURRENT_DATE;
+select * from tugas where deadline <= CURRENT_DATE ORDER BY deadline;
 
 -- name: GetTugas :one
 select * from tugas where id = $1;
