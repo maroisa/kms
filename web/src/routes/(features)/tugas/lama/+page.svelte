@@ -38,8 +38,9 @@
                             {#if tugas.Link}
                                 <p>Links:</p>
                                 <a
-                                    class="link block"
-                                    href={"https://" + tugas.Link}>{link}</a
+                                    target="_blank"
+                                    class="link block text-blue-400"
+                                    href={tugas.Link}>{tugas.Link}</a
                                 >
                             {/if}
                         </div>

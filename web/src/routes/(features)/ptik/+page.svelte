@@ -3,6 +3,7 @@
     import Wolf from "$lib/assets/wolf.webp";
     import MagnifyingGlassIcon from "$lib/icons/magnifyingGlass.svelte";
     import { get } from "$lib/utils/api";
+    import formatDate from "$lib/formatDate";
 
     let ptik = $state([]);
     let filteredPtik = $state([]);
@@ -76,7 +77,8 @@
                             <td>{p.Nama}</td>
                             <td
                                 >{p.TempatLahir},
-                                <span class="tgl-lahir">{p.TanggalLahir}</span
+                                <span class="tgl-lahir"
+                                    >{formatDate(p.TanggalLahir)}</span
                                 ></td
                             >
                         </tr>

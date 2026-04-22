@@ -5,6 +5,7 @@
     import LogoutPopup from "$lib/LogoutPopup.svelte";
     import { checkAuth, get } from "$lib/utils/api";
     import { PUBLIC_API_URL } from "$env/static/public";
+    import formatDate from "$lib/formatDate";
 
     let data = $state({});
 
@@ -69,7 +70,9 @@
                 class="flex bg-base-200 p-4 border border-neutral first:rounded-t-lg last:rounded-b-lg"
             >
                 <p class="flex-1 text-base-content/80">Tanggal Lahir:</p>
-                <p class="font-semibold tgl-lahir">{data.TanggalLahir}</p>
+                <p class="font-semibold tgl-lahir">
+                    {formatDate(data.TanggalLahir)}
+                </p>
             </div>
         </div>
         <button

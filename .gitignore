@@ -6,3 +6,4 @@ assets/uploads/submission/*
 kms
 main
 .envrc
+justfile
