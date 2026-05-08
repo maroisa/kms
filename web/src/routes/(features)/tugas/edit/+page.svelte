@@ -6,6 +6,7 @@
     import { page } from "$app/stores";
 
     let data = $state({});
+    let isPressed = $state(false);
     const tugasID = $page.url.searchParams.get("id");
 
     onMount(() => {
@@ -21,6 +22,7 @@
 
     function submitForm(event) {
         event.preventDefault();
+        isPressed = true;
         let formData = new FormData(event.target);
         put("tugas/" + tugasID, formData).then((res) => {
             if (res.status == 200) {
@@ -86,7 +88,9 @@
                 <a class="grow btn btn-outline" href=".."
                     ><ArrowLeft /> Kembali</a
                 >
-                <button class="grow btn btn-primary"><Pencil />Edit</button>
+                <button class="grow btn btn-primary" disabled={isPressed}
+                    ><Pencil />Edit</button
+                >
             </div>
         </fieldset>
     </form>

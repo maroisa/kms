@@ -3,8 +3,11 @@
     import ArrowLeft from "$lib/icons/arrowLeft.svelte";
     import Plus from "$lib/icons/plus.svelte";
 
+    let isPressed = $state(false);
+
     function submitForm(event) {
         event.preventDefault();
+        isPressed = true;
         let formData = new FormData(event.target);
         post("tugas", formData).then((res) => {
             if (res.status == 200) {
@@ -60,7 +63,9 @@
                 <a class="grow btn btn-outline" href=".."
                     ><ArrowLeft /> Kembali</a
                 >
-                <button class="grow btn btn-primary"><Plus />Tambah</button>
+                <button class="grow btn btn-primary" disabled={isPressed}
+                    ><Plus />Tambah</button
+                >
             </div>
         </fieldset>
     </form>
