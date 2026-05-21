@@ -2,14 +2,15 @@
     import { redirect } from "@sveltejs/kit";
     import { onMount } from "svelte";
     import { checkAuth } from "$lib/utils/api";
+    import { goto } from "$app/navigation";
 
     onMount(() => {
         checkAuth().then((res) => {
             if (res) {
-                window.location.href = "/dashboard";
+                goto("/dashboard");
                 return;
             }
-            window.location.href = "/login";
+            goto("/login");
         });
     });
 </script>

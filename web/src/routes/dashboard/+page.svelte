@@ -1,4 +1,5 @@
 <script>
+    import { goto } from "$app/navigation";
     import SkeletonWebp from "$lib/assets/skeleton.webp";
     import dashboardItem from "$lib/dashboardItem";
     import formatDate from "$lib/formatDate";
@@ -15,7 +16,7 @@
         checkAuth().then((res) => {
             isAuth = res;
             if (!res) {
-                window.location.href = "/login";
+                goto("/login");
             }
         });
         get("tugas").then((res) => (tugas = res));
@@ -122,15 +123,15 @@
                 <div class="flex flex-wrap">
                     {#each dashboardItem as item}
                         <div class="basis-1/2 md:basis-1/3 p-2 sm:p-4">
-                            <a
-                                href={item.href}
-                                class="border-2 border-primary shadow-lg/50 p-4 rounded-lg h-full w-full aspect-4/3 bg-base-200 text-primary text-center flex flex-col justify-center items-center gap-2 md:gap-4"
+                            <button
+                                onclick={() => goto(item.href)}
+                                class="border-2 border-primary active:bg-black hover:bg-base-200/60 active:border-white active:text-white shadow-lg/50 p-4 rounded-lg h-full w-full aspect-4/3 bg-base-200 text-primary text-center flex flex-col justify-center items-center gap-2 md:gap-4"
                             >
                                 {@html item.icon}
                                 <p class="text-sm md:text-lg font-bold">
                                     {item.nama}
                                 </p>
-                            </a>
+                            </button>
                         </div>
                     {/each}
                 </div>

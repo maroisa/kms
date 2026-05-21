@@ -1,3 +1,6 @@
 #!/bin/sh
-export DATABASE_URL="postgresql://USER:PASSWORD@HOST/DB?sslmode=disable"
-export SECRET=""
+
+export GOOSE_DRIVER="postgres"
+export GOOSE_MIGRATION_DIR="./internal/db/migrations"
+export GOOSE_DBSTRING=
+export SECRET=

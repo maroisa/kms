@@ -4,6 +4,7 @@ assets/uploads/pfp/*
 assets/uploads/submission/*
 
 kms
+kms-bin
 main
 .envrc
 justfile

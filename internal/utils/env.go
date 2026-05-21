@@ -6,9 +6,9 @@ import (
 )
 
 func GetDatabaseUrl() string {
-	url := os.Getenv("DATABASE_URL")
+	url := os.Getenv("GOOSE_DBSTRING")
 	if url == "" {
-		log.Fatal("DATABASE_URL is not set!")
+		log.Fatal("GOOSE_DBSTRING is not set!")
 	}
 
 	return url

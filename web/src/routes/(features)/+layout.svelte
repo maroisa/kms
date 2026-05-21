@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import BackNavbar from "$lib/BackNavbar.svelte";
     import { checkAuth } from "$lib/utils/api";
+    import { goto } from "$app/navigation";
 
     let isAuth = $state(false);
 
@@ -9,7 +10,8 @@
         checkAuth().then((res) => {
             isAuth = res;
             if (!res) {
-                window.location.href = "/login";
+                goto("/login");
+                return;
             }
         });
     });
