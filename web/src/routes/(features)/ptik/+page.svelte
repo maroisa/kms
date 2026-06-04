@@ -5,6 +5,7 @@
     import { get } from "$lib/utils/api";
     import formatDate from "$lib/formatDate";
 
+    let isLoading = $state(true);
     let ptik = $state([]);
     let filteredPtik = $state([]);
     let filter = $state("");
@@ -34,34 +35,59 @@
     onMount(async () => {
         get("ptik").then((res) => {
             ptik = res;
+            isLoading = false;
         });
     });
 </script>
 
 <div class="min-h-full flex flex-col">
-    {#if ptik.length == 0}
-        <div class="flex grow justify-center items-center">
-            <img
-                class="absolute top-0 left-0 h-full w-full -z-1"
-                src={Wolf}
-                alt="sad wolf"
+    <div class="p-2 py-4 w-full max-w-6xl mx-auto bg-base-100">
+        <div
+            class="input border-2 border-white mb-4 w-full sticky top-2 z-2 rounded-none"
+        >
+            <MagnifyingGlassIcon />
+            <input
+                bind:value={filter}
+                type="text"
+                placeholder="Cari kata kunci..."
             />
-            <p class="text-xl font-bold">Saat ini jadwal belum tersedia.</p>
         </div>
-    {:else}
-        <div class="p-2 py-4 w-full max-w-6xl mx-auto bg-base-100">
-            <div
-                class="input border-2 border-white mb-4 w-full sticky top-2 z-2"
-            >
-                <MagnifyingGlassIcon />
-                <input
-                    bind:value={filter}
-                    type="text"
-                    placeholder="Cari kata kunci..."
-                />
+        {#if isLoading}
+            <div class="border-2 border-white flex flex-col gap-4 p-4">
+                <div class="flex h-12 gap-2">
+                    <div class="skeleton flex-1 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                </div>
+                <div class="flex h-12 gap-2">
+                    <div class="skeleton flex-1 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                </div>
+                <div class="flex h-12 gap-2">
+                    <div class="skeleton flex-1 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                </div>
+                <div class="flex h-12 gap-2">
+                    <div class="skeleton flex-1 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                </div>
+                <div class="flex h-12 gap-2">
+                    <div class="skeleton flex-1 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                </div>
+                <div class="flex h-12 gap-2">
+                    <div class="skeleton flex-1 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                    <div class="skeleton flex-2 h-12"></div>
+                </div>
             </div>
+        {:else}
             <table
-                class="table table-zebra py-2 border-2 border-white rounded-md text-xs md:text-lg"
+                class="table table-zebra py-2 border-2 border-white text-xs md:text-lg rounded-none"
             >
                 <thead>
                     <tr>
@@ -85,6 +111,6 @@
                     {/each}
                 </tbody>
             </table>
-        </div>
-    {/if}
+        {/if}
+    </div>
 </div>

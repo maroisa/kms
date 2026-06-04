@@ -49,7 +49,6 @@
                             {/each}
                         </ul>
                     </div>
-                    <a href="#" class="btn btn-ghost text-xl">KMS</a>
                 </div>
                 <div class="navbar-center hidden lg:flex">
                     <ul class="menu menu-horizontal font-semibold">
@@ -125,7 +124,7 @@
                         <div class="basis-1/2 md:basis-1/3 p-2 sm:p-4">
                             <button
                                 onclick={() => goto(item.href)}
-                                class="border-2 border-primary active:bg-black hover:bg-base-200/60 active:border-white active:text-white shadow-lg/50 p-4 rounded-lg h-full w-full aspect-4/3 bg-base-200 text-primary text-center flex flex-col justify-center items-center gap-2 md:gap-4"
+                                class="border-2 border-primary active:bg-black hover:bg-base-200/60 active:border-white active:text-white shadow-lg/50 p-4 h-full w-full aspect-4/3 bg-base-200 text-primary text-center flex flex-col justify-center items-center gap-2 md:gap-4 shadow-sq"
                             >
                                 {@html item.icon}
                                 <p class="text-sm md:text-lg font-bold">
